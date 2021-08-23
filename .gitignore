@@ -1,1 +1,3 @@
 *.log
+__pycache__/*
+web/__pycache__/*

@@ -5,22 +5,29 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional
 
 import click
+
+# from web import web
 from nornir import InitNornir
 from nornir.core.filter import F
 from nornir.core.task import Task
 from nornir_scrapli.functions import print_structured_result
 from nornir_scrapli.tasks import send_command
 from nornir_utils.plugins.functions import print_result
-from rich import print
+from rich import print, box
+from rich.console import Console
+from rich.table import Table
+from netaddr import EUI
+
 
 # TODO Add default values
 @dataclass
 class DHCPSnooping:
-    mac_address: str
+    mac_address: EUI
     ip_address: str
     lease: int
     type: str
     vlan: int
+
 
 # TODO Add default values
 @dataclass
@@ -29,17 +36,19 @@ class PortSecurity:
     maximum: int
     total: int
     sticky: int
-    last_mac_address: str
+    last_mac_address: EUI
     last_vlan: int
     violation_count: int
+
 
 # TODO Add default values
 # TODO Change to List
 @dataclass
 class MACAddressTable:
     vlan: int
-    mac_address: str
+    mac_address: EUI
     type: str
+
 
 # TODO Add default values
 @dataclass
@@ -68,6 +77,72 @@ class Switch:
 def short_name(name: str) -> Optional[str]:
     regex = "^([a-zA-Z]+)(\d+\/\d+)$"
     return None
+
+
+def print_switch(switch_data: Switch) -> None:
+    console = Console()
+
+    # Print switch common data
+    table = Table(show_header=True, box=box.ROUNDED)
+    table.add_column("Hostname")
+    table.add_column("IP address")
+    table.add_row(switch_data.hostname, switch_data.ip_address)
+    console.print(table)
+
+    # Print interfaces data
+    table = Table(show_header=True, box=box.SQUARE)
+    table.add_column("Name", overflow="fold")
+    table.add_column("Duplex")
+    table.add_column("Speed")
+    table.add_column("Type")
+    table.add_column("VLAN")
+    table.add_column("Status")
+    table.add_column("Description", overflow="fold")
+    table.add_column("Input errors")
+    table.add_column("Port security state", overflow="fold")
+    table.add_column("Port security maximum")
+    table.add_column("Port security total")
+    table.add_column("Port security sticky")
+    table.add_column("Port security last MAC address", overflow="fold")
+    table.add_column("Port security last VLAN")
+    table.add_column("Port security violation count")
+    for interface in switch_data.interfaces.keys():
+        if switch_data.interfaces[interface].port_security.state == "Enabled":
+            table.add_row(
+                switch_data.interfaces[interface].name,
+                switch_data.interfaces[interface].duplex,
+                switch_data.interfaces[interface].speed,
+                switch_data.interfaces[interface].type,
+                switch_data.interfaces[interface].vlan,
+                switch_data.interfaces[interface].status,
+                switch_data.interfaces[interface].description,
+                str(switch_data.interfaces[interface].input_errors),
+                switch_data.interfaces[interface].port_security.state,
+                str(switch_data.interfaces[interface].port_security.maximum),
+                str(switch_data.interfaces[interface].port_security.total),
+                str(switch_data.interfaces[interface].port_security.sticky),
+                str(switch_data.interfaces[interface].port_security.last_mac_address)
+                + " ("
+                + switch_data.interfaces[interface]
+                .port_security.last_mac_address.oui.registration()
+                .org
+                + ")",
+                str(switch_data.interfaces[interface].port_security.last_vlan),
+                str(switch_data.interfaces[interface].port_security.violation_count),
+            )
+        else:
+            table.add_row(
+                switch_data.interfaces[interface].name,
+                switch_data.interfaces[interface].duplex,
+                switch_data.interfaces[interface].speed,
+                switch_data.interfaces[interface].type,
+                switch_data.interfaces[interface].vlan,
+                switch_data.interfaces[interface].status,
+                switch_data.interfaces[interface].description,
+                str(switch_data.interfaces[interface].input_errors),
+                switch_data.interfaces[interface].port_security.state,
+            )
+    console.print(table)
 
 
 # TODO Move to plugins
@@ -118,7 +193,7 @@ def get_status_data(task: Task) -> Switch:
                     portsec_struct_output["max_mac_addrs"],
                     portsec_struct_output["total_mac_addrs"],
                     portsec_struct_output["sticky_mac_addrs"],
-                    portsec_struct_output["last_src_mac_addr_vlan"].split(":")[0],
+                    EUI(portsec_struct_output["last_src_mac_addr_vlan"].split(":")[0]),
                     portsec_struct_output["last_src_mac_addr_vlan"].split(":")[1],
                     portsec_struct_output["violation_count"],
                 )
@@ -128,7 +203,9 @@ def get_status_data(task: Task) -> Switch:
                     mac_command_string = (
                         f"show mac address-table interface {interface_name}"
                     )
-                    mac_nr_task_result = task.run(send_command, command=mac_command_string)
+                    mac_nr_task_result = task.run(
+                        send_command, command=mac_command_string
+                    )
                     mac_struct_output = mac_nr_task_result[
                         0
                     ].scrapli_response.textfsm_parse_output()[0]
@@ -140,15 +217,17 @@ def get_status_data(task: Task) -> Switch:
                 else:
                     mac_address_table = MACAddressTable(
                         0,
-                        '0000.0000.0000',
-                        'None',
+                        EUI("0000.0000.0000"),
+                        "None",
                     )
 
             else:
                 port_security = PortSecurity(
-                    "Not supported", 0, 0, 0, "0000.0000.0000", 0, 0
+                    "Not supported", 0, 0, 0, EUI("0000.0000.0000"), 0, 0
                 )
-                mac_address_table = MACAddressTable(0, "0000.0000.0000", 'Not supported')
+                mac_address_table = MACAddressTable(
+                    0, EUI("0000.0000.0000"), "Not supported"
+                )
 
             # Fill interfaces list
             interfaces[interface_name] = Interface(
@@ -161,7 +240,7 @@ def get_status_data(task: Task) -> Switch:
                 struct_output["interfaces"][interface_name]["name"],
                 int_struct_output[interface_name]["counters"]["in_errors"],
                 port_security,
-                mac_address_table
+                mac_address_table,
             )
     return Switch(task.host.name, task.host.hostname, interfaces)
 
@@ -175,7 +254,8 @@ def main(filter: str):
     switches = {}
     for switch in output.keys():
         switches[switch] = output[switch].result
-    print(switches)
+        print_switch(switches[switch])
+    # print(switches)
 
 
 if __name__ == "__main__":
