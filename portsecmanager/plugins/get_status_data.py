@@ -3,15 +3,17 @@
 from ipaddress import IPv4Address
 
 from netaddr import EUI
-
 from nornir.core.task import Task
 from nornir_scrapli.tasks import send_command
-from portsecmanager.classes import (Interface, MACAddressTable, PortSecurity,
-                                    Switch)
+from portsecmanager.classes import Interface, MACAddressTable, PortSecurity, Switch
+from portsecmanager.plugins.get_status_data_snmp import get_status_data_snmp
 
 
-# TODO Move to plugins
+# TODO add progressbar
 def get_status_data(task: Task) -> Switch:
+    interfaces = {}
+
+    # TODO Move to plugins
     if task.host.data["vendor"] == "cisco" and task.host.data["driver"] == "cli-ssh":
         task.host.platform = "cisco_iosxe"
         # Get interfaces status data
@@ -19,7 +21,6 @@ def get_status_data(task: Task) -> Switch:
         command_string = "show interfaces status"
         nr_task_result = task.run(send_command, command=command_string)
         struct_output = nr_task_result[0].scrapli_response.genie_parse_output()
-        interfaces = {}
         for interface_name in struct_output["interfaces"].keys():
             # Check for blank description
             if "name" not in struct_output["interfaces"][interface_name]:
@@ -107,4 +108,9 @@ def get_status_data(task: Task) -> Switch:
                 port_security,
                 mac_address_table,
             )
+
+    if task.host.data["vendor"] == "cisco" and task.host.data["driver"] == "snmp":
+        # Get data with SNMP
+        get_status_data_snmp(task)
+
     return Switch(task.host.name, IPv4Address(task.host.hostname), interfaces)

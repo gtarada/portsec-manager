@@ -39,8 +39,10 @@ nornir-scrapli==2021.7.30
 nornir-utils==0.1.2
 ntc-templates==2.2.0
 pathspec==0.9.0
+ply==3.11
 prettytable==2.1.0
 psutil==5.8.0
+pyasn1==0.4.8
 pyats==21.7
 pyats.aereport==21.7
 pyats.aetest==21.7
@@ -56,8 +58,11 @@ pyats.tcl==21.7
 pyats.topology==21.7
 pyats.utils==21.7
 pycparser==2.20
+pycryptodomex==3.10.1
 pyftpdlib==1.5.6
 Pygments==2.10.0
+pysmi==0.3.4
+pysnmp==4.4.12
 python-engineio==3.14.2
 python-socketio==4.6.1
 PyYAML==5.4.1

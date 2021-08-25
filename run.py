@@ -4,7 +4,7 @@ import click
 from nornir import InitNornir
 from nornir.core.filter import F
 
-from portsecmanager.plugins.get_status_data_cli_ssh import get_status_data
+from portsecmanager.plugins.get_status_data import get_status_data
 from portsecmanager.plugins.console_print_switch import console_print_switch
 
 
@@ -13,11 +13,12 @@ from portsecmanager.plugins.console_print_switch import console_print_switch
 def main(filter: str) -> None:
     nr = InitNornir(config_file="nornir_config.yaml")
     hosts = nr.filter(F(name__contains=filter))
+    # TODO add progressbar
     output = hosts.run(get_status_data)
-    switches = {}
-    for switch in output.keys():
-        switches[switch] = output[switch].result
-        console_print_switch(switches[switch])
+    # switches = {}
+    # for switch in output.keys():
+    #     switches[switch] = output[switch].result
+    #     console_print_switch(switches[switch])
 
 if __name__ == "__main__":
     main()
