@@ -27,19 +27,20 @@ debug.setLogger(debug.Debug("all"))
 formatting = "[%(asctime)s-%(levelname)s]-(%(module)s) %(message)s"
 logging.basicConfig(level=logging.DEBUG, format=formatting)
 
-inputMibs = ["CISCO-STACK-MIB", "IF-MIB"]
+inputMibs = ["CISCO-STACK-MIB", "IF-MIB", "IANAifType-MIB", "CISCO-SMI", "CISCO-VTP-MIB", "RMON-MIB", "ENTITY-MIB", "DDI-SMT73-MIB", "FDDI-SMT73-MIB"]
 httpSources = [
     # ("mibs.snmplabs.com", 80, "/asn1/@mib@"),
     ("raw.githubusercontent.com", 80, "/simonjj/SnmpMibs/master/@mib@"),
     ("www.circitor.fr", 80, "/Mibs/Mib/C/@mib@"),
     ("www.circitor.fr", 80, "/Mibs/Mib/R/@mib@"),
     ("www.circitor.fr", 80, "/Mibs/Mib/I/@mib@"),
+    ("www.circitor.fr", 80, "/Mibs/Mib/F/@mib@")
 ]
 ftpSources = [
     ("ftp.cisco.com", "/pub/mibs/v2/@mib@"),
     ("ftp.cisco.com", "/pub/mibs/v1/@mib@"),
 ]
-dstDirectory = "./pysnmp-mibs"
+dstDirectory = "./mibs"
 
 # Initialize compiler infrastructure
 mibCompiler = MibCompiler(SmiStarParser(), PySnmpCodeGen(), PyFileWriter(dstDirectory))

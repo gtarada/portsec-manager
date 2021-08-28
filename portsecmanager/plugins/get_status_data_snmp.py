@@ -2,6 +2,7 @@
 
 
 import asyncio
+import os
 
 from nornir.core.task import Task
 from portsecmanager.classes import Interface, MACAddressTable, PortSecurity, Switch
@@ -14,12 +15,17 @@ from pysnmp.hlapi.asyncio import (
     UdpTransportTarget,
     bulkCmd,
 )
+from pysnmp.smi import builder
 from rich import print
 
 
 async def async_pysnmp_bulkwalk(varBinds, host_address, snmp_community, snmp_port):
     output = {}
     snmpEngine = SnmpEngine()
+    snmpBuilder = snmpEngine.getMibBuilder()
+    snmpBuilder.addMibSources(builder.DirMibSource(
+        os.path.join('mibs')
+    ))
     initialVarBinds = varBinds
     stop = False
     while True:
