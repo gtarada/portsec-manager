@@ -29,7 +29,8 @@ logging.basicConfig(level=logging.DEBUG, format=formatting)
 
 inputMibs = [
     "CISCO-STACK-MIB",
-    "IF-MIB"
+    "IF-MIB",
+    "EtherLike-MIB"
 ]
 httpSources = [
     # ("mibs.snmplabs.com", 80, "/asn1/@mib@"),

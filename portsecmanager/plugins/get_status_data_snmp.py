@@ -23,9 +23,7 @@ async def async_pysnmp_bulkwalk(varBinds, host_address, snmp_community, snmp_por
     output = {}
     snmpEngine = SnmpEngine()
     snmpBuilder = snmpEngine.getMibBuilder()
-    snmpBuilder.addMibSources(builder.DirMibSource(
-        os.path.join('mibs')
-    ))
+    snmpBuilder.addMibSources(builder.DirMibSource(os.path.join("mibs")))
     initialVarBinds = varBinds
     stop = False
     while True:
@@ -106,14 +104,5 @@ def get_status_data_snmp(task: Task) -> None:
         ObjectType(ObjectIdentity("IF-MIB", "ifOperStatus")),
         ObjectType(ObjectIdentity("IF-MIB", "ifInErrors")),
         ObjectType(ObjectIdentity("IF-MIB", "ifAlias")),
-    ]
-    print(pysnmp_bulkwalk(varbinds, task.host.hostname, "public", 161))
-    varbinds = [
-        ObjectType(
-            ObjectIdentity("CISCO-STACK-MIB", "portIfIndex")
-        ),
-        ObjectType(
-            ObjectIdentity("CISCO-STACK-MIB", "portDuplex")
-        ),
     ]
     print(pysnmp_bulkwalk(varbinds, task.host.hostname, "public", 161))
