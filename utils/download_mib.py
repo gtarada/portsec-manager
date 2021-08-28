@@ -27,32 +27,35 @@ debug.setLogger(debug.Debug("all"))
 formatting = "[%(asctime)s-%(levelname)s]-(%(module)s) %(message)s"
 logging.basicConfig(level=logging.DEBUG, format=formatting)
 
-inputMibs = ["CISCO-STACK-MIB", "IF-MIB", "IANAifType-MIB", "CISCO-SMI", "CISCO-VTP-MIB", "RMON-MIB", "ENTITY-MIB", "DDI-SMT73-MIB", "FDDI-SMT73-MIB"]
+inputMibs = [
+    "CISCO-STACK-MIB",
+    "IF-MIB"
+]
 httpSources = [
     # ("mibs.snmplabs.com", 80, "/asn1/@mib@"),
     ("raw.githubusercontent.com", 80, "/simonjj/SnmpMibs/master/@mib@"),
     ("www.circitor.fr", 80, "/Mibs/Mib/C/@mib@"),
-    ("www.circitor.fr", 80, "/Mibs/Mib/R/@mib@"),
+    ("www.circitor.fr", 80, "/Mibs/Mib/E/@mib@"),
+    ("www.circitor.fr", 80, "/Mibs/Mib/F/@mib@"),
     ("www.circitor.fr", 80, "/Mibs/Mib/I/@mib@"),
-    ("www.circitor.fr", 80, "/Mibs/Mib/F/@mib@")
+    ("www.circitor.fr", 80, "/Mibs/Mib/R/@mib@"),
+    ("www.circitor.fr", 80, "/Mibs/Mib/S/@mib@"),
+    ("www.circitor.fr", 80, "/Mibs/Mib/T/@mib@"),
+
 ]
 ftpSources = [
     ("ftp.cisco.com", "/pub/mibs/v2/@mib@"),
     ("ftp.cisco.com", "/pub/mibs/v1/@mib@"),
 ]
 dstDirectory = "./mibs"
-
 # Initialize compiler infrastructure
 mibCompiler = MibCompiler(SmiStarParser(), PySnmpCodeGen(), PyFileWriter(dstDirectory))
-
 # search for source MIBs at Web and FTP sites
 mibCompiler.addSources(*[HttpReader(*x) for x in httpSources])
 mibCompiler.addSources(*[FtpReader(*x) for x in ftpSources])
-
 # never recompile MIBs with MACROs
 mibCompiler.addSearchers(StubSearcher(*PySnmpCodeGen.baseMibs))
-
-# run non-recursive MIB compilation
-results = mibCompiler.compile(*inputMibs, **dict(noDeps=True))
+# run recursive MIB compilation
+results = mibCompiler.compile(*inputMibs, **dict(noDeps=False))
 
 print("Results: %s" % ", ".join(["%s:%s" % (x, results[x]) for x in results]))

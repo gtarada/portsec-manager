@@ -1,16 +1,16 @@
 #
 # PySNMP MIB module CISCO-SMI (http://snmplabs.com/pysmi)
 # ASN.1 source http://raw.githubusercontent.com:80/simonjj/SnmpMibs/master/CISCO-SMI.mib
-# Produced by pysmi-0.3.4 at Sat Aug 28 14:52:16 2021
-# On host compaq platform Linux version 5.13.13-arch1-1 by user gtarada
-# Using Python version 3.9.6 (default, Jun 30 2021, 10:22:16) 
+# Produced by pysmi-0.3.4 at Sat Aug 28 16:40:29 2021
+# On host thinkpad platform Linux version 4.4.0-19041-Microsoft by user gtarada
+# Using Python version 3.9.5 (default, May 19 2021, 11:32:47) 
 #
-Integer, OctetString, ObjectIdentifier = mibBuilder.importSymbols("ASN1", "Integer", "OctetString", "ObjectIdentifier")
+OctetString, Integer, ObjectIdentifier = mibBuilder.importSymbols("ASN1", "OctetString", "Integer", "ObjectIdentifier")
 NamedValues, = mibBuilder.importSymbols("ASN1-ENUMERATION", "NamedValues")
-ConstraintsUnion, SingleValueConstraint, ValueSizeConstraint, ValueRangeConstraint, ConstraintsIntersection = mibBuilder.importSymbols("ASN1-REFINEMENT", "ConstraintsUnion", "SingleValueConstraint", "ValueSizeConstraint", "ValueRangeConstraint", "ConstraintsIntersection")
-ModuleCompliance, NotificationGroup = mibBuilder.importSymbols("SNMPv2-CONF", "ModuleCompliance", "NotificationGroup")
-Counter64, ModuleIdentity, MibScalar, MibTable, MibTableRow, MibTableColumn, ObjectIdentity, Gauge32, iso, Integer32, TimeTicks, NotificationType, Unsigned32, enterprises, IpAddress, Counter32, Bits, MibIdentifier = mibBuilder.importSymbols("SNMPv2-SMI", "Counter64", "ModuleIdentity", "MibScalar", "MibTable", "MibTableRow", "MibTableColumn", "ObjectIdentity", "Gauge32", "iso", "Integer32", "TimeTicks", "NotificationType", "Unsigned32", "enterprises", "IpAddress", "Counter32", "Bits", "MibIdentifier")
-DisplayString, TextualConvention = mibBuilder.importSymbols("SNMPv2-TC", "DisplayString", "TextualConvention")
+ValueRangeConstraint, ConstraintsIntersection, ValueSizeConstraint, ConstraintsUnion, SingleValueConstraint = mibBuilder.importSymbols("ASN1-REFINEMENT", "ValueRangeConstraint", "ConstraintsIntersection", "ValueSizeConstraint", "ConstraintsUnion", "SingleValueConstraint")
+NotificationGroup, ModuleCompliance = mibBuilder.importSymbols("SNMPv2-CONF", "NotificationGroup", "ModuleCompliance")
+Counter64, MibIdentifier, TimeTicks, ModuleIdentity, Counter32, iso, NotificationType, MibScalar, MibTable, MibTableRow, MibTableColumn, Unsigned32, Bits, ObjectIdentity, enterprises, IpAddress, Integer32, Gauge32 = mibBuilder.importSymbols("SNMPv2-SMI", "Counter64", "MibIdentifier", "TimeTicks", "ModuleIdentity", "Counter32", "iso", "NotificationType", "MibScalar", "MibTable", "MibTableRow", "MibTableColumn", "Unsigned32", "Bits", "ObjectIdentity", "enterprises", "IpAddress", "Integer32", "Gauge32")
+TextualConvention, DisplayString = mibBuilder.importSymbols("SNMPv2-TC", "TextualConvention", "DisplayString")
 cisco = ModuleIdentity((1, 3, 6, 1, 4, 1, 9))
 cisco.setRevisions(('2000-01-11 00:00', '1997-04-09 00:00', '1995-05-16 00:00', '1994-04-26 20:00',))
 if mibBuilder.loadTexts: cisco.setLastUpdated('200001110000Z')
@@ -81,4 +81,4 @@ ciscoChipSetSaint3 = ObjectIdentity((1, 3, 6, 1, 4, 1, 9, 11, 3, 3))
 if mibBuilder.loadTexts: ciscoChipSetSaint3.setStatus('current')
 ciscoChipSetSaint4 = ObjectIdentity((1, 3, 6, 1, 4, 1, 9, 11, 3, 4))
 if mibBuilder.loadTexts: ciscoChipSetSaint4.setStatus('current')
-mibBuilder.exportSymbols("CISCO-SMI", ciscoPIB=ciscoPIB, ciscoProducts=ciscoProducts, ciscoConfig=ciscoConfig, newport=newport, ciscoContextProxy=ciscoContextProxy, ciscoUnknownRptrGroup=ciscoUnknownRptrGroup, temporary=temporary, ciscoChipSets=ciscoChipSets, ciscoChipSetSaint4=ciscoChipSetSaint4, cisco2505RptrGroup=cisco2505RptrGroup, ciscoProxy=ciscoProxy, cisco2516RptrGroup=cisco2516RptrGroup, ciscoExperiment=ciscoExperiment, ciscoPolicy=ciscoPolicy, PYSNMP_MODULE_ID=cisco, local=local, ciscoAgentCapability=ciscoAgentCapability, ciscoPibToMib=ciscoPibToMib, cisco2507RptrGroup=cisco2507RptrGroup, ciscoChipSetSaint1=ciscoChipSetSaint1, otherEnterprises=otherEnterprises, ciscoMgmt=ciscoMgmt, lightstream=lightstream, workgroup=workgroup, ciscoworks=ciscoworks, ciscoChipSetSaint2=ciscoChipSetSaint2, ciscoPolicyAuto=ciscoPolicyAuto, ciscoChipSetSaint3=ciscoChipSetSaint3, ciscoPartyProxy=ciscoPartyProxy, ciscoRptrGroupObjectID=ciscoRptrGroupObjectID, ciscoPartnerProducts=ciscoPartnerProducts, ciscoWsx5020RptrGroup=ciscoWsx5020RptrGroup, pakmon=pakmon, ciscoModules=ciscoModules, cisco=cisco, ciscoAdmin=ciscoAdmin)
+mibBuilder.exportSymbols("CISCO-SMI", cisco2516RptrGroup=cisco2516RptrGroup, ciscoRptrGroupObjectID=ciscoRptrGroupObjectID, PYSNMP_MODULE_ID=cisco, newport=newport, ciscoPIB=ciscoPIB, ciscoAdmin=ciscoAdmin, ciscoExperiment=ciscoExperiment, ciscoWsx5020RptrGroup=ciscoWsx5020RptrGroup, local=local, cisco2507RptrGroup=cisco2507RptrGroup, ciscoChipSetSaint3=ciscoChipSetSaint3, pakmon=pakmon, otherEnterprises=otherEnterprises, ciscoPartyProxy=ciscoPartyProxy, ciscoPolicyAuto=ciscoPolicyAuto, temporary=temporary, workgroup=workgroup, cisco2505RptrGroup=cisco2505RptrGroup, ciscoPolicy=ciscoPolicy, ciscoChipSetSaint1=ciscoChipSetSaint1, ciscoChipSets=ciscoChipSets, ciscoModules=ciscoModules, ciscoworks=ciscoworks, lightstream=lightstream, ciscoContextProxy=ciscoContextProxy, ciscoAgentCapability=ciscoAgentCapability, ciscoUnknownRptrGroup=ciscoUnknownRptrGroup, ciscoPartnerProducts=ciscoPartnerProducts, ciscoChipSetSaint4=ciscoChipSetSaint4, ciscoPibToMib=ciscoPibToMib, cisco=cisco, ciscoChipSetSaint2=ciscoChipSetSaint2, ciscoConfig=ciscoConfig, ciscoProducts=ciscoProducts, ciscoMgmt=ciscoMgmt, ciscoProxy=ciscoProxy)
