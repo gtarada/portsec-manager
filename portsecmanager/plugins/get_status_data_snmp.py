@@ -107,13 +107,20 @@ def get_status_data_snmp(task: Task) -> None:
         ObjectType(ObjectIdentity("IF-MIB", "ifInErrors")),
         ObjectType(ObjectIdentity("IF-MIB", "ifAlias")),
     ]
-    print(pysnmp_bulkwalk(varbinds, task.host.hostname, "public", 161))
-    varbinds = [
-        ObjectType(
-            ObjectIdentity("CISCO-STACK-MIB", "portIfIndex")
-        ),
-        ObjectType(
-            ObjectIdentity("CISCO-STACK-MIB", "portDuplex")
-        ),
-    ]
-    print(pysnmp_bulkwalk(varbinds, task.host.hostname, "public", 161))
+    snmp_interfaces_data = pysnmp_bulkwalk(varbinds, task.host.hostname, "public", 161))
+
+    interfaces = {}
+    for ifindex in snmp_interfaces_data.keys():
+        interfaces[snmp_interfaces_data[ifindex]['ifDescr']] = Interface (
+                snmp_interfaces_data[ifindex]['ifDescr'],
+                "-",
+                snmp_interfaces_data[ifindex]['ifHighSpeed'],
+                snmp_interfaces_data[ifindex]['ifType'],
+                "-",
+                snmp_interfaces_data[ifindex]['ifOperStatus'],
+                snmp_interfaces_data[ifindex]['ifAlias'],
+                snmp_interfaces_data[ifindex]['ifInErrors'],
+                PortSecurity(),
+                MacAddressTable(),
+            )
+
