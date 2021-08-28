@@ -103,7 +103,11 @@ def get_status_data_snmp(task: Task) -> None:
     ]
     print(pysnmp_bulkwalk(varbinds, task.host.hostname, "public", 161))
     varbinds = [
-            ObjectType(ObjectIdentity("CISCO-STACK-MIB", "portIfIndex")),
-            ObjectType(ObjectIdentity("CISCO-STACK-MIB", "portDuplex")),
+        ObjectType(
+            ObjectIdentity("CISCO-STACK-MIB", "portIfIndex")
+        ),
+        ObjectType(
+            ObjectIdentity("CISCO-STACK-MIB", "portDuplex")
+        ),
     ]
     print(pysnmp_bulkwalk(varbinds, task.host.hostname, "public", 161))
