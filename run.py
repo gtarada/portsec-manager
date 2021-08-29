@@ -15,10 +15,10 @@ def main(filter: str) -> None:
     hosts = nr.filter(F(name__contains=filter))
     # TODO add progressbar
     output = hosts.run(get_status_data)
-    # switches = {}
-    # for switch in output.keys():
-    #     switches[switch] = output[switch].result
-    #     console_print_switch(switches[switch])
+    switches = {}
+    for switch in output.keys():
+        switches[switch] = output[switch].result
+        console_print_switch(switches[switch])
 
 if __name__ == "__main__":
     main()

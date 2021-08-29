@@ -21,7 +21,6 @@ def console_print_switch(switch_data: Switch) -> None:
     table.add_column("Name", overflow="fold")
     table.add_column("Duplex")
     table.add_column("Speed")
-    table.add_column("Type")
     table.add_column("VLAN")
     table.add_column("Status")
     table.add_column("Description", overflow="fold")
@@ -39,7 +38,6 @@ def console_print_switch(switch_data: Switch) -> None:
                 switch_data.interfaces[interface].name,
                 switch_data.interfaces[interface].duplex,
                 switch_data.interfaces[interface].speed,
-                switch_data.interfaces[interface].type,
                 switch_data.interfaces[interface].vlan,
                 switch_data.interfaces[interface].status,
                 switch_data.interfaces[interface].description,
@@ -57,7 +55,6 @@ def console_print_switch(switch_data: Switch) -> None:
                 switch_data.interfaces[interface].name,
                 switch_data.interfaces[interface].duplex,
                 switch_data.interfaces[interface].speed,
-                switch_data.interfaces[interface].type,
                 switch_data.interfaces[interface].vlan,
                 switch_data.interfaces[interface].status,
                 switch_data.interfaces[interface].description,

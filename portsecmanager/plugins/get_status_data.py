@@ -100,7 +100,6 @@ def get_status_data(task: Task) -> Switch:
                 interface_name,
                 struct_output["interfaces"][interface_name]["duplex_code"],
                 struct_output["interfaces"][interface_name]["port_speed"],
-                struct_output["interfaces"][interface_name]["type"],
                 struct_output["interfaces"][interface_name]["vlan"],
                 struct_output["interfaces"][interface_name]["status"],
                 struct_output["interfaces"][interface_name]["name"],
@@ -111,6 +110,6 @@ def get_status_data(task: Task) -> Switch:
 
     if task.host.data["vendor"] == "cisco" and task.host.data["driver"] == "snmp":
         # Get data with SNMP
-        get_status_data_snmp(task)
+        interfaces = get_status_data_snmp(task)
 
     return Switch(task.host.name, IPv4Address(task.host.hostname), interfaces)

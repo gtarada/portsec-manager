@@ -1,9 +1,9 @@
-# sw1:
-#   hostname: 192.168.100.1
-#   data:
-#     driver: cli-ssh
-#     vendor: cisco
-sw10:
+sw1_cli:
+  hostname: 192.168.100.1
+  data:
+    driver: cli-ssh
+    vendor: cisco
+sw1_snmp:
   hostname: 192.168.100.1
   data:
     driver: snmp

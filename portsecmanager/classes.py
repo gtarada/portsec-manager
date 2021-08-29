@@ -44,7 +44,7 @@ class Interface:
     name: str
     duplex: str
     speed: str
-    type: str
+    # type: str
     vlan: str
     status: str
     description: str

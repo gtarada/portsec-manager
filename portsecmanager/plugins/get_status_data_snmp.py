@@ -3,7 +3,9 @@
 
 import asyncio
 import os
+from typing import Dict
 
+from netaddr import EUI
 from nornir.core.task import Task
 from portsecmanager.classes import Interface, MACAddressTable, PortSecurity, Switch
 from pysnmp.hlapi.asyncio import (
@@ -75,14 +77,10 @@ async def async_pysnmp_bulkwalk(varBinds, host_address, snmp_community, snmp_por
                             ] = snmp_right_index
                     else:
                         stop = True
-
         varBinds = varBindTable[-1]
-
         if stop:
             break
-
     snmpEngine.transportDispatcher.closeDispatcher()
-
     return output
 
 
@@ -95,7 +93,19 @@ def pysnmp_bulkwalk(snmp_bulk_objects, host_address, snmp_community, snmp_port):
     return output
 
 
-def get_status_data_snmp(task: Task) -> None:
+def interface_status(admin_status: str, oper_status: str) -> str:
+    if admin_status == "up" and oper_status == "up":
+        return "connected"
+    else:
+        if admin_status == "down":
+            return "disabled"
+        else:
+            return "unknown"
+
+
+def get_interfaces_data(
+    snmp_host: str, snmp_community: str, snmp_port: int
+) -> Dict[str, Dict[str, str]]:
     varbinds = [
         ObjectType(ObjectIdentity("IF-MIB", "ifDescr")),
         ObjectType(ObjectIdentity("IF-MIB", "ifType")),
@@ -105,20 +115,42 @@ def get_status_data_snmp(task: Task) -> None:
         ObjectType(ObjectIdentity("IF-MIB", "ifInErrors")),
         ObjectType(ObjectIdentity("IF-MIB", "ifAlias")),
     ]
-    print(pysnmp_bulkwalk(varbinds, task.host.hostname, "public", 161))
-    snmp_interfaces_data = pysnmp_bulkwalk(varbinds, task.host.hostname, "public", 161))
-
+    snmp_interfaces_data = pysnmp_bulkwalk(
+        varbinds, snmp_host, snmp_community, snmp_port
+    )
     interfaces = {}
     for ifindex in snmp_interfaces_data.keys():
-        interfaces[snmp_interfaces_data[ifindex]['ifDescr']] = Interface (
-                snmp_interfaces_data[ifindex]['ifDescr'],
-                "-",
-                snmp_interfaces_data[ifindex]['ifHighSpeed'],
-                snmp_interfaces_data[ifindex]['ifType'],
-                "-",
-                snmp_interfaces_data[ifindex]['ifOperStatus'],
-                snmp_interfaces_data[ifindex]['ifAlias'],
-                snmp_interfaces_data[ifindex]['ifInErrors'],
-                PortSecurity(),
-                MacAddressTable(),
-            )
+        if snmp_interfaces_data[ifindex]["ifType"] == "ethernetCsmacd":
+            interfaces[snmp_interfaces_data[ifindex]["ifDescr"]] = {
+                "name": snmp_interfaces_data[ifindex]["ifDescr"],
+                "duplex": "Unknown",
+                "speed": "?",
+                "vlan": "?",
+                "status": interface_status(
+                    snmp_interfaces_data[ifindex]["ifAdminStatus"],
+                    snmp_interfaces_data[ifindex]["ifOperStatus"],
+                ),
+                "description": snmp_interfaces_data[ifindex]["ifAlias"],
+                "errors": snmp_interfaces_data[ifindex]["ifInErrors"],
+            }
+    return interfaces
+
+
+def get_status_data_snmp(task: Task) -> Dict[str, Interface]:
+    interfaces_data = get_interfaces_data(task.host.hostname, "public", 161)
+    port_security = PortSecurity("?", 0, 0, 0, EUI("0000.0000.0000"), 0, 0)
+    mac_address_table = MACAddressTable(0, EUI("0000.0000.0000"), "Not supported")
+    interfaces = {}
+    for ifname in interfaces_data.keys():
+        interfaces[ifname] = Interface(
+            interfaces_data[ifname]["name"],
+            interfaces_data[ifname]["duplex"],
+            interfaces_data[ifname]["speed"],
+            interfaces_data[ifname]["vlan"],
+            interfaces_data[ifname]["status"],
+            interfaces_data[ifname]["description"],
+            interfaces_data[ifname]["errors"],
+            port_security,
+            mac_address_table,
+        )
+    return interfaces
