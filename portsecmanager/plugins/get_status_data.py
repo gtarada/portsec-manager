@@ -12,7 +12,6 @@ from portsecmanager.plugins.get_status_data_snmp import get_status_data_snmp
 # TODO add progressbar
 def get_status_data(task: Task) -> Switch:
     interfaces = {}
-
     # TODO Move to plugins
     if task.host.data["vendor"] == "cisco" and task.host.data["driver"] == "cli-ssh":
         task.host.platform = "cisco_iosxe"
@@ -20,18 +19,15 @@ def get_status_data(task: Task) -> Switch:
         # TODO Move to another function
         command_string = "show interfaces status"
         nr_task_result = task.run(send_command, command=command_string)
-        struct_output = nr_task_result[0].scrapli_response.genie_parse_output()
-        for interface_name in struct_output["interfaces"].keys():
-            # Check for blank description
-            if "name" not in struct_output["interfaces"][interface_name]:
-                struct_output["interfaces"][interface_name]["name"] = ""
+        struct_output = nr_task_result[0].scrapli_response.textfsm_parse_output()
+        for interface_data in struct_output:
             # Get interface detail data
             # TODO Move to another function
-            int_command_string = f"show interface {interface_name}"
+            int_command_string = f"show interface {interface_data['port']}"
             int_nr_task_result = task.run(send_command, command=int_command_string)
             int_struct_output = int_nr_task_result[
                 0
-            ].scrapli_response.genie_parse_output()
+            ].scrapli_response.textfsm_parse_output()
 
             # TODO Move to another function
             # TODO Add custom TextFSM template
@@ -42,11 +38,11 @@ def get_status_data(task: Task) -> Switch:
             # ].scrapli_response.textfsm_parse_output()
             # print(ipdhcp_struct_output)
 
-            if struct_output["interfaces"][interface_name]["vlan"] != "routed":
+            if interface_data["vlan"] != "routed":
 
                 # TODO Move to another function
                 portsec_command_string = (
-                    f"show port-security interface {interface_name}"
+                    f"show port-security interface {interface_data['port']}"
                 )
                 portsec_nr_task_result = task.run(
                     send_command, command=portsec_command_string
@@ -67,7 +63,7 @@ def get_status_data(task: Task) -> Switch:
                 if int(portsec_struct_output["sticky_mac_addrs"]) > 0:
                     # TODO Move to another function
                     mac_command_string = (
-                        f"show mac address-table interface {interface_name}"
+                        f"show mac address-table interface {interface_data['port']}"
                     )
                     mac_nr_task_result = task.run(
                         send_command, command=mac_command_string
@@ -96,14 +92,14 @@ def get_status_data(task: Task) -> Switch:
                 )
 
             # Fill interfaces list
-            interfaces[interface_name] = Interface(
-                interface_name,
-                struct_output["interfaces"][interface_name]["duplex_code"],
-                struct_output["interfaces"][interface_name]["port_speed"],
-                struct_output["interfaces"][interface_name]["vlan"],
-                struct_output["interfaces"][interface_name]["status"],
-                struct_output["interfaces"][interface_name]["name"],
-                int_struct_output[interface_name]["counters"]["in_errors"],
+            interfaces[interface_data["port"]] = Interface(
+                interface_data["port"],
+                interface_data["duplex"],
+                interface_data["speed"],
+                interface_data["vlan"],
+                interface_data["status"],
+                interface_data["name"],
+                int_struct_output[0]["input_errors"],
                 port_security,
                 mac_address_table,
             )

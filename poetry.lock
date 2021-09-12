@@ -97,17 +97,6 @@ python-versions = "*"
 test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
 
 [[package]]
-name = "dill"
-version = "0.3.4"
-description = "serialize all of python"
-category = "main"
-optional = false
-python-versions = ">=2.7, !=3.0.*"
-
-[package.extras]
-graph = ["objgraph (>=1.7.2)"]
-
-[[package]]
 name = "flake8"
 version = "3.9.2"
 description = "the modular source code checker: pep8 pyflakes and co"
@@ -147,127 +136,6 @@ optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
-name = "genie"
-version = "21.8.2"
-description = "Genie: THE standard pyATS Library System"
-category = "main"
-optional = false
-python-versions = ">=3.5"
-
-[package.dependencies]
-dill = "*"
-"genie.libs.clean" = ">=21.8.0,<21.9.0"
-"genie.libs.conf" = ">=21.8.0,<21.9.0"
-"genie.libs.filetransferutils" = ">=21.8.0,<21.9.0"
-"genie.libs.health" = ">=21.8.0,<21.9.0"
-"genie.libs.ops" = ">=21.8.0,<21.9.0"
-"genie.libs.parser" = ">=21.8.0,<21.9.0"
-"genie.libs.sdk" = ">=21.8.0,<21.9.0"
-jsonpickle = "*"
-netaddr = "*"
-PrettyTable = "*"
-tqdm = "*"
-
-[package.extras]
-dev = ["coverage", "restview", "sphinx", "sphinx-rtd-theme"]
-full = ["genie.libs.conf", "genie.libs.clean", "genie.libs.health", "genie.libs.filetransferutils", "genie.libs.ops", "genie.libs.parser", "genie.libs.sdk", "pyats.robot (>=21.8.0,<21.9.0)", "genie.libs.robot (>=21.8.0,<21.9.0)", "genie.telemetry (>=21.8.0,<21.9.0)", "genie.trafficgen (>=21.8.0,<21.9.0)"]
-robot = ["pyats.robot (>=21.8.0,<21.9.0)", "genie.libs.robot (>=21.8.0,<21.9.0)"]
-
-[[package]]
-name = "genie.libs.clean"
-version = "21.8"
-description = "Genie Library for device clean support"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-genie = "*"
-
-[package.extras]
-dev = ["coverage", "paramiko", "restview", "sphinx", "sphinx-rtd-theme", "sphinxcontrib-mockautodoc"]
-
-[[package]]
-name = "genie.libs.conf"
-version = "21.8"
-description = "Genie libs Conf: Libraries to configures topology through Python object attributes"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.extras]
-dev = ["coverage", "restview", "sphinx", "sphinx-rtd-theme"]
-
-[[package]]
-name = "genie.libs.filetransferutils"
-version = "21.8"
-description = "Genie libs FileTransferUtils: Genie FileTransferUtils Libraries"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-pyftpdlib = "*"
-tftpy = "<0.8.1"
-unicon = "*"
-
-[package.extras]
-dev = ["coverage", "restview", "sphinx", "sphinx-rtd-theme"]
-
-[[package]]
-name = "genie.libs.health"
-version = "21.8.1"
-description = "pyATS Health Check for monitoring device health status"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-genie = "*"
-
-[package.extras]
-dev = ["coverage", "paramiko", "restview", "sphinx", "sphinx-rtd-theme", "sphinxcontrib-mockautodoc"]
-
-[[package]]
-name = "genie.libs.ops"
-version = "21.8"
-description = "Genie libs Ops: Libraries to retrieve operational state of the topology"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.extras]
-dev = ["coverage", "restview", "sphinx", "sphinx-rtd-theme"]
-
-[[package]]
-name = "genie.libs.parser"
-version = "21.8"
-description = "Genie libs Parser: Genie Parser Libraries"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-xmltodict = "*"
-
-[package.extras]
-dev = ["coverage", "restview", "sphinx", "sphinx-rtd-theme"]
-
-[[package]]
-name = "genie.libs.sdk"
-version = "21.8"
-description = "Genie libs sdk: Libraries containing all Triggers and Verifications"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-"ruamel.yaml" = "*"
-
-[package.extras]
-dev = ["coverage", "restview", "sphinx", "sphinxcontrib-napoleon", "sphinx-rtd-theme", "xmltodict"]
-
-[[package]]
 name = "idna"
 version = "3.2"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -304,19 +172,6 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
-
-[[package]]
-name = "jsonpickle"
-version = "2.0.0"
-description = "Python library for serializing any arbitrary object graph into JSON"
-category = "main"
-optional = false
-python-versions = ">=2.7"
-
-[package.extras]
-docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
-testing = ["coverage (<5)", "pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-black-multipy", "pytest-cov", "ecdsa", "feedparser", "numpy", "pandas", "pymongo", "sklearn", "sqlalchemy", "enum34", "jsonlib"]
-"testing.libs" = ["demjson", "simplejson", "ujson", "yajl"]
 
 [[package]]
 name = "lxml"
@@ -494,20 +349,6 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "prettytable"
-version = "2.2.0"
-description = "A simple Python library for easily displaying tabular data in a visually appealing ASCII table format"
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-wcwidth = "*"
-
-[package.extras]
-tests = ["pytest", "pytest-cov"]
-
-[[package]]
 name = "py"
 version = "1.10.0"
 description = "library with cross-python path, ini-parsing, io, code, log facilities"
@@ -546,17 +387,6 @@ description = "passive checker of Python programs"
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-
-[[package]]
-name = "pyftpdlib"
-version = "1.5.6"
-description = "Very fast asynchronous FTP server library"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.extras]
-ssl = ["pyopenssl"]
 
 [[package]]
 name = "pygments"
@@ -623,7 +453,7 @@ testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xm
 name = "pyyaml"
 version = "5.4.1"
 description = "YAML parser and emitter for Python"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
@@ -777,14 +607,6 @@ future = "*"
 six = "*"
 
 [[package]]
-name = "tftpy"
-version = "0.8.0"
-description = "Python TFTP library"
-category = "main"
-optional = false
-python-versions = ">=2.7"
-
-[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -801,61 +623,12 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
-name = "tqdm"
-version = "4.62.2"
-description = "Fast, Extensible Progress Meter"
-category = "main"
-optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
-
-[package.dependencies]
-colorama = {version = "*", markers = "platform_system == \"Windows\""}
-
-[package.extras]
-dev = ["py-make (>=0.1.0)", "twine", "wheel"]
-notebook = ["ipywidgets (>=6)"]
-telegram = ["requests"]
-
-[[package]]
 name = "typing-extensions"
 version = "3.10.0.2"
 description = "Backported and Experimental Type Hints for Python 3.5+"
 category = "main"
 optional = false
 python-versions = "*"
-
-[[package]]
-name = "unicon"
-version = "21.8"
-description = "Unicon Connection Library"
-category = "main"
-optional = false
-python-versions = ">=3.5"
-
-[package.dependencies]
-dill = "*"
-pyyaml = "*"
-"unicon.plugins" = ">=21.8.0,<21.9.0"
-
-[package.extras]
-dev = ["cisco-distutils", "coverage", "restview", "sphinx", "sphinxcontrib-napoleon", "sphinxcontrib-mockautodoc", "sphinx-rtd-theme"]
-pyats = ["pyats"]
-robot = ["robotframework"]
-
-[[package]]
-name = "unicon.plugins"
-version = "21.8"
-description = "Unicon Connection Library Plugins"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-pyyaml = "*"
-unicon = ">=21.8.0,<21.9.0"
-
-[package.extras]
-dev = ["setuptools", "pip", "wheel", "coverage", "restview", "sphinx", "sphinxcontrib-napoleon", "sphinxcontrib-mockautodoc", "sphinx-rtd-theme"]
 
 [[package]]
 name = "urllib3"
@@ -871,14 +644,6 @@ secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "cer
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
-name = "wcwidth"
-version = "0.2.5"
-description = "Measures the displayed width of unicode strings in a terminal"
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "werkzeug"
 version = "2.0.1"
 description = "The comprehensive WSGI web application library."
@@ -888,14 +653,6 @@ python-versions = ">=3.6"
 
 [package.extras]
 watchdog = ["watchdog"]
-
-[[package]]
-name = "xmltodict"
-version = "0.12.0"
-description = "Makes working with XML feel like you are working with JSON"
-category = "main"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "yamllint"
@@ -912,7 +669,7 @@ pyyaml = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ab3f8b971284a3b85a9c6c7c9cd022e16bfe14cebc6ae82c33f69084ff728d74"
+content-hash = "8991b3fa69b7db23dfaf8294bb8b0d2c65126763817eca25622f38098e1e2b23"
 
 [metadata.files]
 atomicwrites = [
@@ -947,10 +704,6 @@ commonmark = [
     {file = "commonmark-0.9.1-py2.py3-none-any.whl", hash = "sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9"},
     {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"},
 ]
-dill = [
-    {file = "dill-0.3.4-py2.py3-none-any.whl", hash = "sha256:7e40e4a70304fd9ceab3535d36e58791d9c4a776b38ec7f7ec9afc8d3dca4d4f"},
-    {file = "dill-0.3.4.zip", hash = "sha256:9f9734205146b2b353ab3fec9af0070237b6ddae78452af83d2fca84d739e675"},
-]
 flake8 = [
     {file = "flake8-3.9.2-py2.py3-none-any.whl", hash = "sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907"},
     {file = "flake8-3.9.2.tar.gz", hash = "sha256:07528381786f2a6237b061f6e96610a4167b226cb926e2aa2b6b1d78057c576b"},
@@ -961,41 +714,6 @@ flask = [
 ]
 future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
-]
-genie = [
-    {file = "genie-21.8.2-cp36-cp36m-macosx_10_10_x86_64.whl", hash = "sha256:45a488a15fe2dcc1a09f02d6dca6bfba1abe7e43877d181cddf164427c4ea834"},
-    {file = "genie-21.8.2-cp36-cp36m-macosx_10_16_x86_64.whl", hash = "sha256:892cdf1a7086b1ab2a88cedd0aac270f30bc4799559fccf2743f82c635c3ecbc"},
-    {file = "genie-21.8.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:efef1e4a65bc00b1a4a724527cb8750ce3bbe98b65559b716a75912fc792eff5"},
-    {file = "genie-21.8.2-cp37-cp37m-macosx_10_10_x86_64.whl", hash = "sha256:846a3932a3cd22f0c071c5b0d89a8447792cd841b92886d7ff10639cf95bfff5"},
-    {file = "genie-21.8.2-cp37-cp37m-macosx_10_16_x86_64.whl", hash = "sha256:9f601eb7350b37b4102eda4561a29a7e6f74d421a2efd6cb4ecd9013ea970ec1"},
-    {file = "genie-21.8.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:9caefeed737b4c64c086d3d4fa93010662f8523d58a955eabfb5398dd629db7a"},
-    {file = "genie-21.8.2-cp38-cp38-macosx_10_10_x86_64.whl", hash = "sha256:e8a2442d56e13f0d1dac49cd83431a8882d112066e0ecbcc1ee735cd8b0f7a5c"},
-    {file = "genie-21.8.2-cp38-cp38-macosx_10_16_x86_64.whl", hash = "sha256:1b11054a9d92690571110ca3e78dc64c8022ceddb4736d0452e5b39058a67400"},
-    {file = "genie-21.8.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:2cddaf8bc2b6bac0383de3aaacb9fed5be62e0b3737cddff30bbaf7a18aa9b3d"},
-    {file = "genie-21.8.2-cp39-cp39-macosx_10_10_x86_64.whl", hash = "sha256:80d886a4638e37258a7bc44a5d79391abe2263de4cea0b8f36a9badd9235bb9c"},
-    {file = "genie-21.8.2-cp39-cp39-macosx_10_16_x86_64.whl", hash = "sha256:dc4165616365bb09b3f2950f3c2fe92ced728233f0ddc4a7002e0c93be9e6ca1"},
-    {file = "genie-21.8.2-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:3619e6b110d0c001ec72de4b484eb0a55623bf79bec655970b92baa8b1bde68b"},
-]
-"genie.libs.clean" = [
-    {file = "genie.libs.clean-21.8-py3-none-any.whl", hash = "sha256:607e5f9445b5df35384a1b0ed2ade2ca5956d56231d8ab266465f7349f06eb2f"},
-]
-"genie.libs.conf" = [
-    {file = "genie.libs.conf-21.8-py3-none-any.whl", hash = "sha256:3560cbb18d0f4ad63ed1a4041ff9fbef58454b5ffd2afd01328bce74ffdbb5c7"},
-]
-"genie.libs.filetransferutils" = [
-    {file = "genie.libs.filetransferutils-21.8-py3-none-any.whl", hash = "sha256:ef702a0cdb692939801d337aa92306878adae9da4c06e1ec6ef1e9d420555847"},
-]
-"genie.libs.health" = [
-    {file = "genie.libs.health-21.8.1-py3-none-any.whl", hash = "sha256:0e7eaa7464c0a12998d1f50f078639395a3b04fa555962a3d2b7e08020c04cb2"},
-]
-"genie.libs.ops" = [
-    {file = "genie.libs.ops-21.8-py3-none-any.whl", hash = "sha256:3f30462394214776a476b89d7aec705478e22f52da2cdc5ae94a4bb9a399fcab"},
-]
-"genie.libs.parser" = [
-    {file = "genie.libs.parser-21.8-py3-none-any.whl", hash = "sha256:d9c541bca085d582f2c1caf08a358708bf0eda2810b311fd481e77e8582994aa"},
-]
-"genie.libs.sdk" = [
-    {file = "genie.libs.sdk-21.8-py3-none-any.whl", hash = "sha256:494b712c9f6001f6f9ca8c354227bc2701c67d04e2870337916ebf70241e15be"},
 ]
 idna = [
     {file = "idna-3.2-py3-none-any.whl", hash = "sha256:14475042e284991034cb48e06f6851428fb14c4dc953acd9be9a5e95c7b6dd7a"},
@@ -1012,10 +730,6 @@ itsdangerous = [
 jinja2 = [
     {file = "Jinja2-3.0.1-py3-none-any.whl", hash = "sha256:1f06f2da51e7b56b8f238affdd6b4e2c61e39598a378cc49345bc1bd42a978a4"},
     {file = "Jinja2-3.0.1.tar.gz", hash = "sha256:703f484b47a6af502e743c9122595cc812b0271f661722403114f71a79d0f5a4"},
-]
-jsonpickle = [
-    {file = "jsonpickle-2.0.0-py2.py3-none-any.whl", hash = "sha256:c1010994c1fbda87a48f8a56698605b598cb0fc6bb7e7927559fc1100e69aeac"},
-    {file = "jsonpickle-2.0.0.tar.gz", hash = "sha256:0be49cba80ea6f87a168aa8168d717d00c6ca07ba83df3cec32d3b30bfe6fb9a"},
 ]
 lxml = [
     {file = "lxml-4.6.3-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:df7c53783a46febb0e70f6b05df2ba104610f2fb0d27023409734a3ecbb78fb2"},
@@ -1196,10 +910,6 @@ ply = [
     {file = "ply-3.11-py2.py3-none-any.whl", hash = "sha256:096f9b8350b65ebd2fd1346b12452efe5b9607f7482813ffca50c22722a807ce"},
     {file = "ply-3.11.tar.gz", hash = "sha256:00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3"},
 ]
-prettytable = [
-    {file = "prettytable-2.2.0-py3-none-any.whl", hash = "sha256:b186f1db9c9377cb552cfa95a3b7a0feab6ec55d7cad7e0763bdcbea1e8f4687"},
-    {file = "prettytable-2.2.0.tar.gz", hash = "sha256:bd81678c108e6c73d4f1e47cd4283de301faaa6ff6220bcd1d4022038c56b416"},
-]
 py = [
     {file = "py-1.10.0-py2.py3-none-any.whl", hash = "sha256:3b80836aa6d1feeaa108e046da6423ab8f6ceda6468545ae8d02d9d58d18818a"},
     {file = "py-1.10.0.tar.gz", hash = "sha256:21b81bda15b66ef5e1a777a21c4dcd9c20ad3efd0b3f817e7a809035269e1bd3"},
@@ -1258,9 +968,6 @@ pycryptodomex = [
 pyflakes = [
     {file = "pyflakes-2.3.1-py2.py3-none-any.whl", hash = "sha256:7893783d01b8a89811dd72d7dfd4d84ff098e5eed95cfa8905b22bbffe52efc3"},
     {file = "pyflakes-2.3.1.tar.gz", hash = "sha256:f5bc8ecabc05bb9d291eb5203d6810b49040f6ff446a756326104746cc00c1db"},
-]
-pyftpdlib = [
-    {file = "pyftpdlib-1.5.6.tar.gz", hash = "sha256:fda655d81f29af52885ca2f8a2704134baed540f16d66a0b26e8fdfafd12db5e"},
 ]
 pygments = [
     {file = "Pygments-2.10.0-py3-none-any.whl", hash = "sha256:b8e67fe6af78f492b3c4b3e2970c0624cbf08beb1e493b2c99b9fa1b67a20380"},
@@ -1437,9 +1144,6 @@ textfsm = [
     {file = "textfsm-1.1.2-py2.py3-none-any.whl", hash = "sha256:f3d4e9bd4344935a08e6844e53d6220e2e4fb7e465bee51fa909152ed6bab406"},
     {file = "textfsm-1.1.2.tar.gz", hash = "sha256:85a450b441aff04b1cac726bdb36f35534a5b196cca08c8bc14fddd879c4255c"},
 ]
-tftpy = [
-    {file = "tftpy-0.8.0.tar.gz", hash = "sha256:c9095f6420125690865717e251dac3382abe5562d98b79780857b4535f554ffe"},
-]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
     {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
@@ -1448,47 +1152,18 @@ tomli = [
     {file = "tomli-1.2.1-py3-none-any.whl", hash = "sha256:8dd0e9524d6f386271a36b41dbf6c57d8e32fd96fd22b6584679dc569d20899f"},
     {file = "tomli-1.2.1.tar.gz", hash = "sha256:a5b75cb6f3968abb47af1b40c1819dc519ea82bcc065776a866e8d74c5ca9442"},
 ]
-tqdm = [
-    {file = "tqdm-4.62.2-py2.py3-none-any.whl", hash = "sha256:80aead664e6c1672c4ae20dc50e1cdc5e20eeff9b14aa23ecd426375b28be588"},
-    {file = "tqdm-4.62.2.tar.gz", hash = "sha256:a4d6d112e507ef98513ac119ead1159d286deab17dffedd96921412c2d236ff5"},
-]
 typing-extensions = [
     {file = "typing_extensions-3.10.0.2-py2-none-any.whl", hash = "sha256:d8226d10bc02a29bcc81df19a26e56a9647f8b0a6d4a83924139f4a8b01f17b7"},
     {file = "typing_extensions-3.10.0.2-py3-none-any.whl", hash = "sha256:f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"},
     {file = "typing_extensions-3.10.0.2.tar.gz", hash = "sha256:49f75d16ff11f1cd258e1b988ccff82a3ca5570217d7ad8c5f48205dd99a677e"},
 ]
-unicon = [
-    {file = "unicon-21.8-cp36-cp36m-macosx_10_10_x86_64.whl", hash = "sha256:cf6bfd82d1a3095453586d2ec56265a4d116099724297e146437192276322956"},
-    {file = "unicon-21.8-cp36-cp36m-macosx_10_16_x86_64.whl", hash = "sha256:61a6c0d177f615c84a005099c493569c04aed0a8e1c920cd1081dbfad3ef703a"},
-    {file = "unicon-21.8-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:2e2a846c1c484cf8529aff2066126b0d3ef484c762e59e20825ee56e0a3a7084"},
-    {file = "unicon-21.8-cp37-cp37m-macosx_10_10_x86_64.whl", hash = "sha256:27aa6c59509bd66e907d0e4d1a89fc1770a04d65377b2e8188bb51cd25dd2961"},
-    {file = "unicon-21.8-cp37-cp37m-macosx_10_16_x86_64.whl", hash = "sha256:eda790d1b36e6865aaa60c85edeb08e4c1580e4fe7effd1c078b98e37b7cb1d6"},
-    {file = "unicon-21.8-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:09097f2102b54d1ac71a411e1af5e38ebdfc10915e53c409de9488d93c233b68"},
-    {file = "unicon-21.8-cp38-cp38-macosx_10_10_x86_64.whl", hash = "sha256:5cd1a2bb8a8b7fb75366a87a735f0fbec155c73e56e0a83385ea30798f81f96f"},
-    {file = "unicon-21.8-cp38-cp38-macosx_10_16_x86_64.whl", hash = "sha256:d3197ff81aa6475e1f05f8927668d1dc279736a068d8ff700f2deb02ef0f4e46"},
-    {file = "unicon-21.8-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:d8e96226b19c5470c307e20dd7266672195ba23fb3e839a60e5dba24a0df119c"},
-    {file = "unicon-21.8-cp39-cp39-macosx_10_10_x86_64.whl", hash = "sha256:31263245498fd6aaae76dc213d67c9a8955926039b2c3b28d1684f3b40ce9e01"},
-    {file = "unicon-21.8-cp39-cp39-macosx_10_16_x86_64.whl", hash = "sha256:5c2e0aa6446bc9087dbd1ee09c3a14913e2d5872fa7b4b7b305e72b433e1685e"},
-    {file = "unicon-21.8-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:a7ff2ab94fcf25d239c9f51fc0882c0e30dee7f9628f04a43fa7ab0c4603a313"},
-]
-"unicon.plugins" = [
-    {file = "unicon.plugins-21.8-py3-none-any.whl", hash = "sha256:c7c5137b0db86df1cc9985ec2e10d616669b27ffbe54663c28639536d0e92740"},
-]
 urllib3 = [
     {file = "urllib3-1.26.6-py2.py3-none-any.whl", hash = "sha256:39fb8672126159acb139a7718dd10806104dec1e2f0f6c88aab05d17df10c8d4"},
     {file = "urllib3-1.26.6.tar.gz", hash = "sha256:f57b4c16c62fa2760b7e3d97c35b255512fb6b59a259730f36ba32ce9f8e342f"},
 ]
-wcwidth = [
-    {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
-    {file = "wcwidth-0.2.5.tar.gz", hash = "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"},
-]
 werkzeug = [
     {file = "Werkzeug-2.0.1-py3-none-any.whl", hash = "sha256:6c1ec500dcdba0baa27600f6a22f6333d8b662d22027ff9f6202e3367413caa8"},
     {file = "Werkzeug-2.0.1.tar.gz", hash = "sha256:1de1db30d010ff1af14a009224ec49ab2329ad2cde454c8a708130642d579c42"},
-]
-xmltodict = [
-    {file = "xmltodict-0.12.0-py2.py3-none-any.whl", hash = "sha256:8bbcb45cc982f48b2ca8fe7e7827c5d792f217ecf1792626f808bf41c3b86051"},
-    {file = "xmltodict-0.12.0.tar.gz", hash = "sha256:50d8c638ed7ecb88d90561beedbf720c9b4e851a9fa6c47ebd64e99d166d8a21"},
 ]
 yamllint = [
     {file = "yamllint-1.26.3.tar.gz", hash = "sha256:3934dcde484374596d6b52d8db412929a169f6d9e52e20f9ade5bf3523d9b96e"},
