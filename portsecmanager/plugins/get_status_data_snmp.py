@@ -135,9 +135,28 @@ def get_interfaces_data(
             }
     return interfaces
 
+def get_port_security_data(snmp_host: str, snmp_community: str, snmp_port: int):
+    varbinds = [
+        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfPortSecurityEnable")),
+        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfSecureLastMacAddress")),
+        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfSecureLastMacAddrVlanId")),
+        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfPortSecurityStatus")),
+        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfMaxSecureMacAddr")),
+        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfCurrentSecureMacAddrCount")),
+        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfViolationCount")),
+    ]
+    snmp_port_security_data = pysnmp_bulkwalk(
+        varbinds, snmp_host, snmp_community, snmp_port
+    )
+    print(snmp_port_security_data)
+
+    return None
+
+
 
 def get_status_data_snmp(task: Task) -> Dict[str, Interface]:
     interfaces_data = get_interfaces_data(task.host.hostname, "public", 161)
+    port_security = get_port_security_data(task.host.hostname, "public", 161)
     port_security = PortSecurity("?", 0, 0, 0, EUI("0000.0000.0000"), 0, 0)
     mac_address_table = MACAddressTable(0, EUI("0000.0000.0000"), "Not supported")
     interfaces = {}

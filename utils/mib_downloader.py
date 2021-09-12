@@ -23,14 +23,15 @@ from pysmi import debug
 import logging
 import sys
 
-debug.setLogger(debug.Debug("all"))
-formatting = "[%(asctime)s-%(levelname)s]-(%(module)s) %(message)s"
-logging.basicConfig(level=logging.DEBUG, format=formatting)
+# debug.setLogger(debug.Debug("all"))
+# formatting = "[%(asctime)s-%(levelname)s]-(%(module)s) %(message)s"
+# logging.basicConfig(level=logging.DEBUG, format=formatting)
 
 inputMibs = [
     "CISCO-STACK-MIB",
     "IF-MIB",
-    "EtherLike-MIB"
+    "EtherLike-MIB",
+    "CISCO-PORT-SECURITY-MIB"
 ]
 httpSources = [
     # ("mibs.snmplabs.com", 80, "/asn1/@mib@"),
