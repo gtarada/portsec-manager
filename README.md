@@ -1,6 +1,6 @@
 #### TODO
 
-- [ ] Poetry dependencies
+- [x] Poetry dependencies
 - [x] Nornir inventory
 - [ ] Collect data with:
     - [ ] snmp (Cisco, SNR)
