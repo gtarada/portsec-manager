@@ -22,10 +22,8 @@ class DHCPSnooping:
 class PortSecurity:
     state: str
     maximum: int
-    total: int
     sticky: int
     last_mac_address: EUI
-    last_vlan: int
     violation_count: int
 
 

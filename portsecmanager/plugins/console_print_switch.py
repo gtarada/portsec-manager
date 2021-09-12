@@ -27,10 +27,8 @@ def console_print_switch(switch_data: Switch) -> None:
     table.add_column("Input errors")
     table.add_column("Port security state", overflow="fold")
     table.add_column("Port security maximum")
-    table.add_column("Port security total")
     table.add_column("Port security sticky")
     table.add_column("Port security last MAC address", overflow="fold")
-    table.add_column("Port security last VLAN")
     table.add_column("Port security violation count")
     for interface in switch_data.interfaces.keys():
         if switch_data.interfaces[interface].port_security.state == "Enabled":
@@ -44,10 +42,8 @@ def console_print_switch(switch_data: Switch) -> None:
                 str(switch_data.interfaces[interface].input_errors),
                 switch_data.interfaces[interface].port_security.state,
                 str(switch_data.interfaces[interface].port_security.maximum),
-                str(switch_data.interfaces[interface].port_security.total),
                 str(switch_data.interfaces[interface].port_security.sticky),
                 str(switch_data.interfaces[interface].port_security.last_mac_address),
-                str(switch_data.interfaces[interface].port_security.last_vlan),
                 str(switch_data.interfaces[interface].port_security.violation_count),
             )
         else:

@@ -5,7 +5,7 @@ import asyncio
 import os
 from typing import Dict
 
-from netaddr import EUI
+from netaddr import EUI, mac_unix
 from nornir.core.task import Task
 from portsecmanager.classes import Interface, MACAddressTable, PortSecurity, Switch
 from pysnmp.hlapi.asyncio import (
@@ -100,7 +100,10 @@ def interface_status(admin_status: str, oper_status: str) -> str:
         if admin_status == "down":
             return "disabled"
         else:
-            return "unknown"
+            if oper_status == "down":
+                return "notconnect"
+            else:
+                return "unknown"
 
 
 def get_interfaces_data(
@@ -135,29 +138,72 @@ def get_interfaces_data(
             }
     return interfaces
 
-def get_port_security_data(snmp_host: str, snmp_community: str, snmp_port: int):
+
+def get_port_security_data(
+    snmp_host: str, snmp_community: str, snmp_port: int
+) -> Dict[str, Dict[str, str]]:
     varbinds = [
-        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfPortSecurityEnable")),
-        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfSecureLastMacAddress")),
-        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfSecureLastMacAddrVlanId")),
-        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfPortSecurityStatus")),
+        ObjectType(ObjectIdentity("IF-MIB", "ifDescr")),
+        ObjectType(ObjectIdentity("IF-MIB", "ifType")),
+        ObjectType(
+            ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfPortSecurityEnable")
+        ),
+        ObjectType(
+            ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfSecureLastMacAddress")
+        ),
         ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfMaxSecureMacAddr")),
-        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfCurrentSecureMacAddrCount")),
+        ObjectType(
+            ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfCurrentSecureMacAddrCount")
+        ),
         ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsIfViolationCount")),
     ]
     snmp_port_security_data = pysnmp_bulkwalk(
         varbinds, snmp_host, snmp_community, snmp_port
     )
-    print(snmp_port_security_data)
-
-    return None
-
+    port_security_dict = {}
+    for ifindex in snmp_port_security_data.keys():
+        if snmp_port_security_data[ifindex]["ifType"] == "ethernetCsmacd":
+            if snmp_port_security_data[ifindex]["cpsIfPortSecurityEnable"] == "true":
+                port_security_dict[snmp_port_security_data[ifindex]["ifDescr"]] = {
+                    "state": "Enabled",
+                    "maximum": snmp_port_security_data[ifindex][
+                        "cpsIfMaxSecureMacAddr"
+                    ],
+                    "sticky": snmp_port_security_data[ifindex][
+                        "cpsIfCurrentSecureMacAddrCount"
+                    ],
+                    "last_mac_address": snmp_port_security_data[ifindex][
+                        "cpsIfSecureLastMacAddress"
+                    ],
+                    "violation_count": snmp_port_security_data[ifindex][
+                        "cpsIfViolationCount"
+                    ],
+                }
+            else:
+                port_security_dict[snmp_port_security_data[ifindex]["ifDescr"]] = {
+                    "state": "Disabled",
+                    "maximum": snmp_port_security_data[ifindex][
+                        "cpsIfMaxSecureMacAddr"
+                    ],
+                    "sticky": snmp_port_security_data[ifindex][
+                        "cpsIfCurrentSecureMacAddrCount"
+                    ],
+                    "last_mac_address": "00:00:00:00:00:00",
+                    "violation_count": snmp_port_security_data[ifindex][
+                        "cpsIfViolationCount"
+                    ],
+                }
+    return port_security_dict
 
 
 def get_status_data_snmp(task: Task) -> Dict[str, Interface]:
-    interfaces_data = get_interfaces_data(task.host.hostname, "public", 161)
-    port_security = get_port_security_data(task.host.hostname, "public", 161)
-    port_security = PortSecurity("?", 0, 0, 0, EUI("0000.0000.0000"), 0, 0)
+    interfaces_data = get_interfaces_data(
+        task.host.hostname, task.host.data["community"], 161
+    )
+    port_security_data = get_port_security_data(
+        task.host.hostname, task.host.data["community"], 161
+    )
+    # port_security = PortSecurity("?", 0, 0, EUI("0000.0000.0000"), 0)
     mac_address_table = MACAddressTable(0, EUI("0000.0000.0000"), "Not supported")
     interfaces = {}
     for ifname in interfaces_data.keys():
@@ -169,7 +215,17 @@ def get_status_data_snmp(task: Task) -> Dict[str, Interface]:
             interfaces_data[ifname]["status"],
             interfaces_data[ifname]["description"],
             interfaces_data[ifname]["errors"],
-            port_security,
+            PortSecurity(
+                port_security_data[ifname]["state"],
+                port_security_data[ifname]["maximum"],
+                port_security_data[ifname]["sticky"],
+                EUI(
+                    str(port_security_data[ifname]["last_mac_address"]),
+                    version=48,
+                    dialect=mac_unix,
+                ),
+                port_security_data[ifname]["violation_count"],
+            ),
             mac_address_table,
         )
     return interfaces

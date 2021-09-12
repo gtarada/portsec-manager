@@ -53,10 +53,8 @@ def get_status_data(task: Task) -> Switch:
                 port_security = PortSecurity(
                     portsec_struct_output["port_security"],
                     portsec_struct_output["max_mac_addrs"],
-                    portsec_struct_output["total_mac_addrs"],
                     portsec_struct_output["sticky_mac_addrs"],
                     EUI(portsec_struct_output["last_src_mac_addr_vlan"].split(":")[0]),
-                    portsec_struct_output["last_src_mac_addr_vlan"].split(":")[1],
                     portsec_struct_output["violation_count"],
                 )
 
@@ -85,7 +83,7 @@ def get_status_data(task: Task) -> Switch:
 
             else:
                 port_security = PortSecurity(
-                    "Not supported", 0, 0, 0, EUI("0000.0000.0000"), 0, 0
+                    "Not supported", 0, 0, EUI("0000.0000.0000"), 0
                 )
                 mac_address_table = MACAddressTable(
                     0, EUI("0000.0000.0000"), "Not supported"
