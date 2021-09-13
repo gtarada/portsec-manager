@@ -200,6 +200,18 @@ def get_interfaces_data(
     return interfaces
 
 
+"""
+
+CISCO-PORT-SECURITY-MIB
+
+cpsSecureMacAddrType           ifindex  mac address
+.1.3.6.1.4.1.9.9.315.1.2.2.1.2 .21     .108.75.144.116.140.19 = INTEGER: 2
+.1.3.6.1.4.1.9.9.315.1.2.2.1.2 .23     .108.75.144.116.140.21 = INTEGER: 2
+.1.3.6.1.4.1.9.9.315.1.2.2.1.2 .24     .188.233.47.251.215.247 = INTEGER: 2
+
+"""
+
+
 def get_port_security_data(
     snmp_host: str, snmp_community: str, snmp_port: int
 ) -> Dict[str, Dict[str, str]]:
@@ -221,10 +233,22 @@ def get_port_security_data(
     snmp_port_security_data = pysnmp_bulkwalk(
         varbinds, snmp_host, snmp_community, snmp_port
     )
+    varbinds = [
+        ObjectType(ObjectIdentity("CISCO-PORT-SECURITY-MIB", "cpsSecureMacAddrType")),
+    ]
+    snmp_portsec_macs = pysnmp_bulkwalk(varbinds, snmp_host, snmp_community, snmp_port)
+    snmp_portsec_macs_i = {}
+    for ifindex in snmp_portsec_macs.keys():
+        snmp_portsec_macs_i[ifindex] = [x for x in snmp_portsec_macs[ifindex].keys()]
+
     port_security_dict = {}
     for ifindex in snmp_port_security_data.keys():
         if snmp_port_security_data[ifindex]["ifType"] == "ethernetCsmacd":
             if snmp_port_security_data[ifindex]["cpsIfPortSecurityEnable"] == "true":
+                try:
+                    fill_secure_mac_addresses = snmp_portsec_macs_i[ifindex]
+                except:
+                    fill_secure_mac_addresses = ["0000.0000.0000"]
                 port_security_dict[snmp_port_security_data[ifindex]["ifDescr"]] = {
                     "state": "Enabled",
                     "maximum": snmp_port_security_data[ifindex][
@@ -239,6 +263,7 @@ def get_port_security_data(
                     "violation_count": snmp_port_security_data[ifindex][
                         "cpsIfViolationCount"
                     ],
+                    "secure_mac_addresses": fill_secure_mac_addresses,
                 }
             else:
                 port_security_dict[snmp_port_security_data[ifindex]["ifDescr"]] = {
@@ -249,24 +274,13 @@ def get_port_security_data(
                     "sticky": snmp_port_security_data[ifindex][
                         "cpsIfCurrentSecureMacAddrCount"
                     ],
-                    "last_mac_address": "00:00:00:00:00:00",
+                    "last_mac_address": "0000.0000.0000",
                     "violation_count": snmp_port_security_data[ifindex][
                         "cpsIfViolationCount"
                     ],
+                    "secure_mac_addresses": ["0000.0000.0000"],
                 }
     return port_security_dict
-
-
-"""
-
-CISCO-PORT-SECURITY-MIB
-
-cpsSecureMacAddrType           ifindex  mac address
-.1.3.6.1.4.1.9.9.315.1.2.2.1.2 .21     .108.75.144.116.140.19 = INTEGER: 2
-.1.3.6.1.4.1.9.9.315.1.2.2.1.2 .23     .108.75.144.116.140.21 = INTEGER: 2
-.1.3.6.1.4.1.9.9.315.1.2.2.1.2 .24     .188.233.47.251.215.247 = INTEGER: 2
-
-"""
 
 
 def get_status_data_snmp(task: Task) -> Dict[str, Interface]:
@@ -291,6 +305,7 @@ def get_status_data_snmp(task: Task) -> Dict[str, Interface]:
                 port_security_data[ifname]["state"],
                 port_security_data[ifname]["maximum"],
                 port_security_data[ifname]["sticky"],
+                port_security_data[ifname]["secure_mac_addresses"],
                 EUI(
                     str(port_security_data[ifname]["last_mac_address"]),
                     version=48,

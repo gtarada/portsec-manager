@@ -30,6 +30,7 @@ def console_print_switch(switch_data: Switch) -> None:
     table.add_column("Port security sticky")
     table.add_column("Port security last MAC address", overflow="fold")
     table.add_column("Port security violation count")
+    table.add_column("Port security secure MAC address", overflow="fold")
     for interface in switch_data.interfaces.keys():
         if switch_data.interfaces[interface].port_security.state == "Enabled":
             table.add_row(
@@ -45,6 +46,9 @@ def console_print_switch(switch_data: Switch) -> None:
                 str(switch_data.interfaces[interface].port_security.sticky),
                 str(switch_data.interfaces[interface].port_security.last_mac_address),
                 str(switch_data.interfaces[interface].port_security.violation_count),
+                str(
+                    switch_data.interfaces[interface].port_security.secure_mac_addresses
+                ),
             )
         else:
             table.add_row(

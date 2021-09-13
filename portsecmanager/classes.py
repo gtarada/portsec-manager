@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from ipaddress import IPv4Address
-from typing import Dict
+from typing import Dict, List
 
 from netaddr import EUI
 
@@ -23,6 +23,7 @@ class PortSecurity:
     state: str
     maximum: int
     sticky: int
+    secure_mac_addresses: List[str]
     last_mac_address: EUI
     violation_count: int
 
