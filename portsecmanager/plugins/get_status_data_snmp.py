@@ -117,6 +117,7 @@ def get_interfaces_data(
         ObjectType(ObjectIdentity("IF-MIB", "ifOperStatus")),
         ObjectType(ObjectIdentity("IF-MIB", "ifInErrors")),
         ObjectType(ObjectIdentity("IF-MIB", "ifAlias")),
+        ObjectType(ObjectIdentity("CISCO-VLAN-MEMBERSHIP-MIB", "vmVlan")),
     ]
     snmp_interfaces_data = pysnmp_bulkwalk(
         varbinds, snmp_host, snmp_community, snmp_port
@@ -126,9 +127,11 @@ def get_interfaces_data(
         if snmp_interfaces_data[ifindex]["ifType"] == "ethernetCsmacd":
             interfaces[snmp_interfaces_data[ifindex]["ifDescr"]] = {
                 "name": snmp_interfaces_data[ifindex]["ifDescr"],
-                "duplex": "Unknown",
+                "duplex": "?",
                 "speed": "?",
-                "vlan": "?",
+                "vlan": snmp_interfaces_data[ifindex]["vmVlan"]
+                if "vmVlan" in snmp_interfaces_data[ifindex].keys()
+                else "Not supported",
                 "status": interface_status(
                     snmp_interfaces_data[ifindex]["ifAdminStatus"],
                     snmp_interfaces_data[ifindex]["ifOperStatus"],
