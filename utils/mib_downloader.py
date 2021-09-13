@@ -31,7 +31,8 @@ inputMibs = [
     "CISCO-STACK-MIB",
     "IF-MIB",
     "EtherLike-MIB",
-    "CISCO-PORT-SECURITY-MIB"
+    "CISCO-PORT-SECURITY-MIB",
+    "CISCO-VLAN-MEMBERSHIP-MIB",
 ]
 httpSources = [
     # ("mibs.snmplabs.com", 80, "/asn1/@mib@"),
@@ -43,7 +44,6 @@ httpSources = [
     ("www.circitor.fr", 80, "/Mibs/Mib/R/@mib@"),
     ("www.circitor.fr", 80, "/Mibs/Mib/S/@mib@"),
     ("www.circitor.fr", 80, "/Mibs/Mib/T/@mib@"),
-
 ]
 ftpSources = [
     ("ftp.cisco.com", "/pub/mibs/v2/@mib@"),
