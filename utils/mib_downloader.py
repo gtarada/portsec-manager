@@ -33,6 +33,7 @@ inputMibs = [
     "EtherLike-MIB",
     "CISCO-PORT-SECURITY-MIB",
     "CISCO-VLAN-MEMBERSHIP-MIB",
+    "CISCO-C2900-MIB",
 ]
 httpSources = [
     # ("mibs.snmplabs.com", 80, "/asn1/@mib@"),
