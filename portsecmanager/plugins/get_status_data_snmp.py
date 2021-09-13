@@ -106,6 +106,35 @@ def interface_status(admin_status: str, oper_status: str) -> str:
                 return "unknown"
 
 
+def format_iface_duplex(state: str, status: str, oper_state: str) -> str:
+    if oper_state == "up":
+        if state == "autoNegotiate" and status == "fullduplex":
+            return "a-full"
+        else:
+            return "unknown"
+    else:
+        if state == "autoNegotiate":
+            return "auto"
+        else:
+            return "unknown"
+
+
+def format_iface_speed(speed: str, admin_speed: str, oper_state: str) -> str:
+    if oper_state == "up":
+        if speed == "100" and admin_speed == "autoDetect":
+            return "a-100"
+        else:
+            if speed == "1000" and admin_speed == "autoDetect":
+                return "a-1000"
+            else:
+                return "unknown"
+    else:
+        if admin_speed == "autoDetect":
+            return "auto"
+        else:
+            return "unknown"
+
+
 def get_interfaces_data(
     snmp_host: str, snmp_community: str, snmp_port: int
 ) -> Dict[str, Dict[str, str]]:
@@ -119,25 +148,54 @@ def get_interfaces_data(
         ObjectType(ObjectIdentity("IF-MIB", "ifAlias")),
         ObjectType(ObjectIdentity("CISCO-VLAN-MEMBERSHIP-MIB", "vmVlan")),
     ]
-    snmp_interfaces_data = pysnmp_bulkwalk(
-        varbinds, snmp_host, snmp_community, snmp_port
-    )
+    snmp_ifaces_d = pysnmp_bulkwalk(varbinds, snmp_host, snmp_community, snmp_port)
+    varbinds = [
+        ObjectType(ObjectIdentity("CISCO-C2900-MIB", "c2900PortDuplexState")),
+        ObjectType(ObjectIdentity("CISCO-C2900-MIB", "c2900PortDuplexStatus")),
+        ObjectType(ObjectIdentity("CISCO-C2900-MIB", "c2900PortAdminSpeed")),
+        ObjectType(ObjectIdentity("CISCO-C2900-MIB", "c2900PortIfIndex")),
+    ]
+    snmp_ifaces_c = pysnmp_bulkwalk(varbinds, snmp_host, snmp_community, snmp_port)
+    snmp_ifaces_data_ci: dict = {}
+    for index in snmp_ifaces_c["0"].keys():
+        ifindex = snmp_ifaces_c["0"][index]["c2900PortIfIndex"]
+        snmp_ifaces_data_ci[ifindex] = {}
+        snmp_ifaces_data_ci[ifindex]["c2900PortDuplexState"] = snmp_ifaces_c["0"][
+            index
+        ]["c2900PortDuplexState"]
+        snmp_ifaces_data_ci[ifindex]["c2900PortDuplexStatus"] = snmp_ifaces_c["0"][
+            index
+        ]["c2900PortDuplexStatus"]
+        snmp_ifaces_data_ci[ifindex]["c2900PortAdminSpeed"] = snmp_ifaces_c["0"][index][
+            "c2900PortAdminSpeed"
+        ]
     interfaces = {}
-    for ifindex in snmp_interfaces_data.keys():
-        if snmp_interfaces_data[ifindex]["ifType"] == "ethernetCsmacd":
-            interfaces[snmp_interfaces_data[ifindex]["ifDescr"]] = {
-                "name": snmp_interfaces_data[ifindex]["ifDescr"],
-                "duplex": "?",
-                "speed": "?",
-                "vlan": snmp_interfaces_data[ifindex]["vmVlan"]
-                if "vmVlan" in snmp_interfaces_data[ifindex].keys()
-                else "Not supported",
-                "status": interface_status(
-                    snmp_interfaces_data[ifindex]["ifAdminStatus"],
-                    snmp_interfaces_data[ifindex]["ifOperStatus"],
-                ),
-                "description": snmp_interfaces_data[ifindex]["ifAlias"],
-                "errors": snmp_interfaces_data[ifindex]["ifInErrors"],
+    for ifindex in snmp_ifaces_d.keys():
+        if snmp_ifaces_d[ifindex]["ifType"] == "ethernetCsmacd":
+            total_interface_status = interface_status(
+                snmp_ifaces_d[ifindex]["ifAdminStatus"],
+                snmp_ifaces_d[ifindex]["ifOperStatus"],
+            )
+            total_iface_duplex = format_iface_duplex(
+                snmp_ifaces_data_ci[ifindex]["c2900PortDuplexState"],
+                snmp_ifaces_data_ci[ifindex]["c2900PortDuplexStatus"],
+                snmp_ifaces_d[ifindex]["ifOperStatus"],
+            )
+            total_iface_speed = format_iface_speed(
+                snmp_ifaces_d[ifindex]["ifHighSpeed"],
+                snmp_ifaces_data_ci[ifindex]["c2900PortAdminSpeed"],
+                snmp_ifaces_d[ifindex]["ifOperStatus"],
+            )
+            interfaces[snmp_ifaces_d[ifindex]["ifDescr"]] = {
+                "name": snmp_ifaces_d[ifindex]["ifDescr"],
+                "duplex": total_iface_duplex,
+                "speed": total_iface_speed,
+                "vlan": snmp_ifaces_d[ifindex]["vmVlan"]
+                if "vmVlan" in snmp_ifaces_d[ifindex].keys()
+                else "",
+                "status": total_interface_status,
+                "description": snmp_ifaces_d[ifindex]["ifAlias"],
+                "errors": snmp_ifaces_d[ifindex]["ifInErrors"],
             }
     return interfaces
 
@@ -199,6 +257,18 @@ def get_port_security_data(
     return port_security_dict
 
 
+"""
+
+CISCO-PORT-SECURITY-MIB
+
+cpsSecureMacAddrType           ifindex  mac address
+.1.3.6.1.4.1.9.9.315.1.2.2.1.2 .21     .108.75.144.116.140.19 = INTEGER: 2
+.1.3.6.1.4.1.9.9.315.1.2.2.1.2 .23     .108.75.144.116.140.21 = INTEGER: 2
+.1.3.6.1.4.1.9.9.315.1.2.2.1.2 .24     .188.233.47.251.215.247 = INTEGER: 2
+
+"""
+
+
 def get_status_data_snmp(task: Task) -> Dict[str, Interface]:
     interfaces_data = get_interfaces_data(
         task.host.hostname, task.host.data["community"], 161
@@ -206,7 +276,6 @@ def get_status_data_snmp(task: Task) -> Dict[str, Interface]:
     port_security_data = get_port_security_data(
         task.host.hostname, task.host.data["community"], 161
     )
-    # port_security = PortSecurity("?", 0, 0, EUI("0000.0000.0000"), 0)
     mac_address_table = MACAddressTable(0, EUI("0000.0000.0000"), "Not supported")
     interfaces = {}
     for ifname in interfaces_data.keys():
