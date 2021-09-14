@@ -23,7 +23,7 @@ class PortSecurity:
     state: str
     maximum: int
     sticky: int
-    secure_mac_addresses: List[str]
+    secure_mac_addresses: List[EUI]
     last_mac_address: EUI
     violation_count: int
 

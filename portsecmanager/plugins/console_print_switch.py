@@ -46,8 +46,11 @@ def console_print_switch(switch_data: Switch) -> None:
                 str(switch_data.interfaces[interface].port_security.sticky),
                 str(switch_data.interfaces[interface].port_security.last_mac_address),
                 str(switch_data.interfaces[interface].port_security.violation_count),
-                str(
-                    switch_data.interfaces[interface].port_security.secure_mac_addresses
+                " ".join(
+                    str(x)
+                    for x in switch_data.interfaces[
+                        interface
+                    ].port_security.secure_mac_addresses
                 ),
             )
         else:

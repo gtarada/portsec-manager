@@ -239,7 +239,14 @@ def get_port_security_data(
     snmp_portsec_macs = pysnmp_bulkwalk(varbinds, snmp_host, snmp_community, snmp_port)
     snmp_portsec_macs_i = {}
     for ifindex in snmp_portsec_macs.keys():
-        snmp_portsec_macs_i[ifindex] = [x for x in snmp_portsec_macs[ifindex].keys()]
+        snmp_portsec_macs_i[ifindex] = [
+            EUI(
+                x.replace('"', ""),
+                version=48,
+                dialect=mac_unix,
+            )
+            for x in snmp_portsec_macs[ifindex].keys()
+        ]
 
     port_security_dict = {}
     for ifindex in snmp_port_security_data.keys():
@@ -278,7 +285,7 @@ def get_port_security_data(
                     "violation_count": snmp_port_security_data[ifindex][
                         "cpsIfViolationCount"
                     ],
-                    "secure_mac_addresses": ["0000.0000.0000"],
+                    "secure_mac_addresses": [EUI("0000.0000.0000")],
                 }
     return port_security_dict
 
