@@ -4,8 +4,8 @@ import click
 from nornir import InitNornir
 from nornir.core.filter import F
 
-from portsecmanager.plugins.get_status_data import get_status_data
-from portsecmanager.plugins.console_print_switch import console_print_switch
+from portsec-manager.plugins.get_status_data import get_status_data
+from portsec-manager.plugins.console_print_switch import console_print_switch
 
 
 @click.command()
