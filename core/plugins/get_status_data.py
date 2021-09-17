@@ -5,8 +5,8 @@ from ipaddress import IPv4Address
 from netaddr import EUI
 from nornir.core.task import Task
 from nornir_scrapli.tasks import send_command
-from portsec_manager.classes import Interface, MACAddressTable, PortSecurity, Switch
-from portsec_manager.plugins.get_status_data_snmp import get_status_data_snmp
+from core.classes import Interface, MACAddressTable, PortSecurity, Switch
+from core.plugins.get_status_data_snmp import get_status_data_snmp
 
 
 # TODO add progressbar

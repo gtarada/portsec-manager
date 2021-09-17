@@ -4,13 +4,11 @@ import click
 from nornir import InitNornir
 from nornir.core.filter import F
 
-from portsec_manager.plugins.get_status_data import get_status_data
-from portsec_manager.plugins.console_print_switch import console_print_switch
+from core.plugins.get_status_data import get_status_data
+from core.plugins.console_print_switch import console_print_switch
 
 
-@click.command()
-@click.option("--filter", required=True, prompt=True)
-def main(filter: str) -> None:
+def get_status(filter: str) -> None:
     nr = InitNornir(config_file="nornir_config.yaml")
     hosts = nr.filter(F(name__contains=filter))
     # TODO add progressbar
@@ -19,6 +17,20 @@ def main(filter: str) -> None:
     for switch in output.keys():
         switches[switch] = output[switch].result
         console_print_switch(switches[switch])
+
+
+def clear_sticky(clear: str) -> None:
+    pass
+
+
+@click.command()
+@click.option("--filter", required=True, prompt=True)
+@click.option("--clear", type=str)
+def main(filter: str, clear: str) -> None:
+    if clear:
+        clear_sticky(clear)
+    else:
+        get_status(filter)
 
 
 if __name__ == "__main__":
