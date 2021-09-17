@@ -8,3 +8,9 @@ sw1_snmp:
   data:
     driver: snmp
     vendor: cisco
+72-tmn-har75-sw2950-f14_snmp:
+  hostname: 10.172.128.17
+  data:
+    driver: snmp
+    vendor: cisco
+    community: graf_tes
