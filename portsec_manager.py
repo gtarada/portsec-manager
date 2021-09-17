@@ -4,8 +4,8 @@ import click
 from nornir import InitNornir
 from nornir.core.filter import F
 
-from portsec-manager.plugins.get_status_data import get_status_data
-from portsec-manager.plugins.console_print_switch import console_print_switch
+from portsec_manager.plugins.get_status_data import get_status_data
+from portsec_manager.plugins.console_print_switch import console_print_switch
 
 
 @click.command()
@@ -19,6 +19,7 @@ def main(filter: str) -> None:
     for switch in output.keys():
         switches[switch] = output[switch].result
         console_print_switch(switches[switch])
+
 
 if __name__ == "__main__":
     main()

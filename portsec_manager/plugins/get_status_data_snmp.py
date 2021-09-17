@@ -7,7 +7,7 @@ from typing import Dict
 
 from netaddr import EUI, mac_unix
 from nornir.core.task import Task
-from portsecmanager.classes import Interface, MACAddressTable, PortSecurity, Switch
+from portsec_manager.classes import Interface, MACAddressTable, PortSecurity, Switch
 from pysnmp.hlapi.asyncio import (
     CommunityData,
     ContextData,

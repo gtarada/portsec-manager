@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from portsecmanager.classes import Switch
+from portsec_manager.classes import Switch
 from rich import box, print
 from rich.console import Console
 from rich.table import Table
