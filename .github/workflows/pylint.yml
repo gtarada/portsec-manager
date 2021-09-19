@@ -1,12 +1,12 @@
 # TODO https://github.com/actions/starter-workflows/blob/main/ci/docker-image.yml
 # TODO https://github.com/actions/starter-workflows/blob/main/ci/python-app.yml
 
-name: pylint
+name: Linting
 
 on: [push]
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     env:
       POETRY_VIRTUALENVS_CREATE: false
