@@ -44,7 +44,7 @@ def inventory_single_host(nr: Nornir, filter: str) -> Hosts:
 @click.command()
 @click.option("--filter", required=True, prompt=True)
 @click.option("--clear", type=str)
-def main(filter: str, clear: str) -> None:
+def main(filter: str, clear: str) -> None
     nr = InitNornir(config_file="nornir_config.yaml")
     nr.inventory.hosts = inventory_single_host(nr, filter)
 
