@@ -34,7 +34,7 @@ jobs:
         poetry add pylint
     - name: Analysing the code with pylint
       run: |
-        pylint `find -regextype egrep -regex '(.*.py)$' | grep -v ./mibs/ | grep -v ./utils/ | xargs` | tee pylint.txt
+        pylint `find -regextype egrep -regex '(.*.py)$' | grep -v ./mibs/ | grep -v ./utils/ | grep -v get-poetry.py | xargs` | tee pylint.txt
     - name: Upload pylint.txt as artifact
       uses: actions/upload-artifact@v2
       with:
