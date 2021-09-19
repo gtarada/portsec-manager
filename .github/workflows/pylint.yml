@@ -31,4 +31,4 @@ jobs:
         poetry add pylint
     - name: Analysing the code with pylint
       run: |
-        poetry run pylint `ls -R|grep .py$|xargs`
+        poetry run pylint `ls -R|grep .py$|grep -v get-poetry.py|grep -v /mibs/|xargs`
