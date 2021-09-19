@@ -1,3 +1,6 @@
+# TODO https://github.com/actions/starter-workflows/blob/main/ci/docker-image.yml
+# TODO https://github.com/actions/starter-workflows/blob/main/ci/python-app.yml
+
 name: pylint
 
 on: [push]
