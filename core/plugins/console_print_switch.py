@@ -25,7 +25,7 @@ def console_print_switch(switch_data: Switch) -> None:
     table.add_column("Status")
     table.add_column("Description", overflow="fold")
     table.add_column("Input errors")
-    table.add_column("Port security state", overflow="fold")
+    # table.add_column("Port security state", overflow="fold")
     table.add_column("Port security maximum")
     table.add_column("Port security sticky")
     table.add_column("Port security last MAC address", overflow="fold")
@@ -41,7 +41,7 @@ def console_print_switch(switch_data: Switch) -> None:
                 switch_data.interfaces[interface].status,
                 switch_data.interfaces[interface].description,
                 str(switch_data.interfaces[interface].input_errors),
-                switch_data.interfaces[interface].port_security.state,
+                # switch_data.interfaces[interface].port_security.state,
                 str(switch_data.interfaces[interface].port_security.maximum),
                 str(switch_data.interfaces[interface].port_security.sticky),
                 str(switch_data.interfaces[interface].port_security.last_mac_address),
@@ -62,6 +62,6 @@ def console_print_switch(switch_data: Switch) -> None:
                 switch_data.interfaces[interface].status,
                 switch_data.interfaces[interface].description,
                 str(switch_data.interfaces[interface].input_errors),
-                switch_data.interfaces[interface].port_security.state,
+                # switch_data.interfaces[interface].port_security.state,
             )
     console.print(table)

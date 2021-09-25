@@ -119,7 +119,7 @@ def snmpget_secure_mac_address(hostname: str, community: str, ifindex: int) -> E
 
 
 def clear_sticky_snmp(task: Task, iface: str) -> None:
-    ifindex = 30
+    ifindex = 2
     last_mac = snmpget_last_mac_address(
         task.host.hostname, task.host.data["community"], ifindex
     )
@@ -127,8 +127,9 @@ def clear_sticky_snmp(task: Task, iface: str) -> None:
         task.host.hostname, task.host.data["community"], ifindex
     )
     found = False
-    for secure_mac in secure_macs:
-        if last_mac == secure_mac:
-            found = True
-    if not found:
-        snmpset_clear_iface(task.host.hostname, task.host.data["community_rw"], ifindex)
+    # FIXME check if clear secure mac from old interface (notconnect?)
+    # for secure_mac in secure_macs:
+    #     if last_mac == secure_mac:
+    #         found = True
+    # if not found:
+    snmpset_clear_iface(task.host.hostname, task.host.data["community_rw"], ifindex)
