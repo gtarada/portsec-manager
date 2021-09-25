@@ -4,7 +4,8 @@ EXPOSE 5000
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_CREATE=false \
-    POETRY_HOME="/opt/poetry"
+    POETRY_HOME="/opt/poetry" \
+    PATH="$POETRY_HOME/bin:$PATH"
 
 WORKDIR /app
 
@@ -14,8 +15,7 @@ RUN curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/p
 # Copy using poetry.lock* in case it doesn't exist yet
 COPY pyproject.toml poetry.lock* /app/
 
-RUN /bin/sh $POETRY_HOME/env && \
-    $POETRY_HOME/bin/poetry install --no-root --no-dev
+RUN poetry install --no-root --no-dev
 
 COPY . /app
 
