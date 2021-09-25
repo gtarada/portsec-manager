@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 # TODO add nginx and change to 80
 EXPOSE 5000
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -7,6 +7,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     POETRY_HOME="/opt/poetry"
 
 WORKDIR /app
+
+RUN apt update && \
+    apt install --no-install-recommends -y curl && \
+    apt clean && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sSL -o install-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py && \
     python install-poetry.py -y
@@ -25,8 +29,3 @@ USER appuser
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "portsec-manager:app"]
-
-
-# RUN apt update && \
-# apt install --no-install-recommends -y nginx && \
-# apt clean && rm -rf /var/lib/apt/lists/*
