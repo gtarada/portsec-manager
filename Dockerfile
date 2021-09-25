@@ -1,9 +1,9 @@
 FROM python:3.9
 EXPOSE 5000
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-ENV POETRY_VIRTUALENVS_CREATE=false
-ENV PATH="${HOME}/.poetry/bin:${PATH}"
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    POETRY_VIRTUALENVS_CREATE=false \
+    POETRY_HOME="/opt/poetry"
 
 RUN curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py && \
     python get-poetry.py -y
@@ -11,9 +11,9 @@ RUN curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/p
 # Copy using poetry.lock* in case it doesn't exist yet
 COPY pyproject.toml poetry.lock* /app/
 
-RUN poetry install --no-root --no-dev
-
 WORKDIR /app
+
+RUN $POETRY_HOME/poetry install --no-root --no-dev
 
 COPY . /app
 
