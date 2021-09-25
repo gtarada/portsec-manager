@@ -25,7 +25,7 @@ async def async_pysnmp_bulkwalk(varBinds, host_address, snmp_community, snmp_por
     output = {}
     snmpEngine = SnmpEngine()
     snmpBuilder = snmpEngine.getMibBuilder()
-    snmpBuilder.addMibSources(builder.DirMibSource(os.path.join("mibs")))
+    snmpBuilder.addMibSources(builder.DirMibSource(os.path.join("mib")))
     initialVarBinds = varBinds
     stop = False
     while True:

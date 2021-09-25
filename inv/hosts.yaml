@@ -1,0 +1,17 @@
+sw1_cli:
+  hostname: 192.168.100.1
+  data:
+    driver: cli-ssh
+    vendor: cisco
+sw1_snmp:
+  hostname: 192.168.100.1
+  data:
+    driver: snmp
+    vendor: cisco
+72-tmn-har75-sw2950-f14_snmp:
+  hostname: 10.172.128.17
+  data:
+    driver: snmp
+    vendor: cisco
+    community: graf_tes
+    community_rw: psm_test

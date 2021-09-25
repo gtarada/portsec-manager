@@ -20,7 +20,7 @@ import os
 def snmpset_clear_iface(hostname: str, community: str, ifindex: int) -> None:
     snmpEngine = SnmpEngine()
     snmpBuilder = snmpEngine.getMibBuilder()
-    snmpBuilder.addMibSources(builder.DirMibSource(os.path.join("mibs")))
+    snmpBuilder.addMibSources(builder.DirMibSource(os.path.join("mib")))
     g = setCmd(
         snmpEngine,
         CommunityData(community),
@@ -55,7 +55,7 @@ def snmpset_clear_iface(hostname: str, community: str, ifindex: int) -> None:
 def snmpget_last_mac_address(hostname: str, community: str, ifindex: int) -> EUI:
     snmpEngine = SnmpEngine()
     snmpBuilder = snmpEngine.getMibBuilder()
-    snmpBuilder.addMibSources(builder.DirMibSource(os.path.join("mibs")))
+    snmpBuilder.addMibSources(builder.DirMibSource(os.path.join("mib")))
     g = getCmd(
         snmpEngine,
         CommunityData(community),
