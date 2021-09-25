@@ -1,4 +1,5 @@
 FROM python:3.9
+# add nginx and change to 80
 EXPOSE 5000
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
