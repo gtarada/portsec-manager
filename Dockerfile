@@ -2,11 +2,11 @@ FROM python:3.9-slim
 EXPOSE 5000
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV POETRY_VIRTUALENVS_CREATE=false
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | POETRY_HOME=/opt/poetry python && \
-    cd /usr/local/bin && \
-    ln -s /opt/poetry/bin/poetry && \
-    poetry config virtualenvs.create false
+RUN curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py && \
+    python get-poetry.py -y && \
+    echo "$HOME/.poetry/bin" >> $PATH
 
 # Copy using poetry.lock* in case it doesn't exist yet
 COPY pyproject.toml poetry.lock* /app/
