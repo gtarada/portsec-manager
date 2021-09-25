@@ -14,7 +14,7 @@ COPY pyproject.toml poetry.lock* /app/
 WORKDIR /app
 
 RUN /bin/sh $POETRY_HOME/env && \
-    $POETRY_HOME/poetry install --no-root --no-dev
+    $POETRY_HOME/bin/poetry install --no-root --no-dev
 
 COPY . /app
 
