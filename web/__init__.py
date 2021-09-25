@@ -1,5 +1,5 @@
-from flask import Flask
+# -*- coding: utf-8 -*-
 
-web = Flask(__name__)
+import flask
 
-from web import routes
+app = flask.Flask(__name__)
