@@ -1,4 +1,5 @@
-FROM python:3.9-slim
+# TODO change to -slim image
+FROM python:3.9
 # TODO add nginx and change to 80
 EXPOSE 5000
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -8,9 +9,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-RUN apt update && \
-    apt install --no-install-recommends -y curl && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && \
+#     apt-get install --no-install-recommends -y curl && \
+#     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sSL -o install-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py && \
     python install-poetry.py -y
