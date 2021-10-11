@@ -111,16 +111,16 @@ test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
 
 [[package]]
 name = "flake8"
-version = "3.9.2"
+version = "4.0.1"
 description = "the modular source code checker: pep8 pyflakes and co"
 category = "dev"
 optional = false
-python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
+python-versions = ">=3.6"
 
 [package.dependencies]
 mccabe = ">=0.6.0,<0.7.0"
-pycodestyle = ">=2.7.0,<2.8.0"
-pyflakes = ">=2.3.0,<2.4.0"
+pycodestyle = ">=2.8.0,<2.9.0"
+pyflakes = ">=2.4.0,<2.5.0"
 
 [[package]]
 name = "flask"
@@ -415,11 +415,11 @@ python-versions = "*"
 
 [[package]]
 name = "pycodestyle"
-version = "2.7.0"
+version = "2.8.0"
 description = "Python style guide checker"
 category = "dev"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "pycryptodomex"
@@ -431,7 +431,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "pyflakes"
-version = "2.3.1"
+version = "2.4.0"
 description = "passive checker of Python programs"
 category = "dev"
 optional = false
@@ -743,7 +743,7 @@ pyyaml = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "75d552d58e25bea3d8fa9537e7acf815038695d3d37c2861d1e579c3ff285f25"
+content-hash = "68145b427750bb43a319b272f573688e0c94f44a23d8a4810dae16a070c6deac"
 
 [metadata.files]
 astroid = [
@@ -783,8 +783,8 @@ commonmark = [
     {file = "commonmark-0.9.1.tar.gz", hash = "sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60"},
 ]
 flake8 = [
-    {file = "flake8-3.9.2-py2.py3-none-any.whl", hash = "sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907"},
-    {file = "flake8-3.9.2.tar.gz", hash = "sha256:07528381786f2a6237b061f6e96610a4167b226cb926e2aa2b6b1d78057c576b"},
+    {file = "flake8-4.0.1-py2.py3-none-any.whl", hash = "sha256:479b1304f72536a55948cb40a32dce8bb0ffe3501e26eaf292c7e60eb5e0428d"},
+    {file = "flake8-4.0.1.tar.gz", hash = "sha256:806e034dda44114815e23c16ef92f95c91e4c71100ff52813adf7132a6ad870d"},
 ]
 flask = [
     {file = "Flask-2.0.1-py3-none-any.whl", hash = "sha256:a6209ca15eb63fc9385f38e452704113d679511d9574d09b2cf9183ae7d20dc9"},
@@ -1040,8 +1040,8 @@ pyasn1 = [
     {file = "pyasn1-0.4.8.tar.gz", hash = "sha256:aef77c9fb94a3ac588e87841208bdec464471d9871bd5050a287cc9a475cd0ba"},
 ]
 pycodestyle = [
-    {file = "pycodestyle-2.7.0-py2.py3-none-any.whl", hash = "sha256:514f76d918fcc0b55c6680472f0a37970994e07bbb80725808c17089be302068"},
-    {file = "pycodestyle-2.7.0.tar.gz", hash = "sha256:c389c1d06bf7904078ca03399a4816f974a1d590090fecea0c63ec26ebaf1cef"},
+    {file = "pycodestyle-2.8.0-py2.py3-none-any.whl", hash = "sha256:720f8b39dde8b293825e7ff02c475f3077124006db4f440dcbc9a20b76548a20"},
+    {file = "pycodestyle-2.8.0.tar.gz", hash = "sha256:eddd5847ef438ea1c7870ca7eb78a9d47ce0cdb4851a5523949f2601d0cbbe7f"},
 ]
 pycryptodomex = [
     {file = "pycryptodomex-3.10.4-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:c1888507549eccedd0fff20dfa70c95b3848bf5b4fe2da1c971ee3ee646675d9"},
@@ -1049,17 +1049,20 @@ pycryptodomex = [
     {file = "pycryptodomex-3.10.4-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:04299f783efa97f540e1fe72e6ee332614778c72ccabc2e84452435a5768748e"},
     {file = "pycryptodomex-3.10.4-cp27-cp27m-manylinux2010_i686.whl", hash = "sha256:a75f9ba6d01e9b21b0f40079646c10b0a7fc1404dcf756731afd137b1f9b109a"},
     {file = "pycryptodomex-3.10.4-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:ac33233c2a1c6dc7279b4b1db7c534bdf4b9c2252290a3c4a86d21443712c2c7"},
+    {file = "pycryptodomex-3.10.4-cp27-cp27m-manylinux2014_aarch64.whl", hash = "sha256:8c2b3ac851227dc4ffc1aa006d3ec971c8f8fa212409538e4d6b311fa77be97f"},
     {file = "pycryptodomex-3.10.4-cp27-cp27m-win32.whl", hash = "sha256:911722bce054221f6411f1e5a790962a0e2beb6eb9647f83fd3b4ca06de6d5b6"},
     {file = "pycryptodomex-3.10.4-cp27-cp27m-win_amd64.whl", hash = "sha256:fb72db4db594398c8b59caacfe9aa8c269c5cc41b4cdd20b471b6490ba60256d"},
     {file = "pycryptodomex-3.10.4-cp27-cp27mu-manylinux1_i686.whl", hash = "sha256:1339bc64209135b004916978e5d56bf14166fda78e68338a72427e0d3b92ea98"},
     {file = "pycryptodomex-3.10.4-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:08095bbbb536a817247411e28deaf67fc29a00ca0a099464ba2cfaa34f5999dd"},
     {file = "pycryptodomex-3.10.4-cp27-cp27mu-manylinux2010_i686.whl", hash = "sha256:9a3926b38f0ae61b72472acda1aac00f7b54875ecc1cb6bdd07da6cc02006416"},
     {file = "pycryptodomex-3.10.4-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:7a32f4d69ee69d72c54d9d5f7b3810212d5dca76aa97a850884bd8b0636411fa"},
+    {file = "pycryptodomex-3.10.4-cp27-cp27mu-manylinux2014_aarch64.whl", hash = "sha256:56e99b06ee238c353cd538058ce05fa2bc34bd819dfd21c1026ed9271ba98962"},
     {file = "pycryptodomex-3.10.4-cp35-abi3-macosx_10_9_x86_64.whl", hash = "sha256:99f925b9a1c6a62f03385e0c14f8fd55d2366bb47fd8c3ccd82764c4f39aa5b5"},
     {file = "pycryptodomex-3.10.4-cp35-abi3-manylinux1_i686.whl", hash = "sha256:ea3e634623ff41a9471517a9a3735821d91cfc97b8b803522e9fd96c1a094568"},
     {file = "pycryptodomex-3.10.4-cp35-abi3-manylinux1_x86_64.whl", hash = "sha256:22838f744833bd5befb6b9b55c50e255b39fa3cb2c7d28c2d9e903f222f8cc4c"},
     {file = "pycryptodomex-3.10.4-cp35-abi3-manylinux2010_i686.whl", hash = "sha256:c07f8cad7b2597357291f144a07c0120399bc0a1ee5ca0c6b2af52691ad2a22a"},
     {file = "pycryptodomex-3.10.4-cp35-abi3-manylinux2010_x86_64.whl", hash = "sha256:9e628383788eac3f661798c01121029a60722a0922b3e903ea88be3065231256"},
+    {file = "pycryptodomex-3.10.4-cp35-abi3-manylinux2014_aarch64.whl", hash = "sha256:a68871322ece62fea85ba63c16c5d0fb150be723e71cb879b6fd011c38afc502"},
     {file = "pycryptodomex-3.10.4-cp35-abi3-win32.whl", hash = "sha256:784b39e5c4d6331f559036b0efc8593d3336a6e6a0db86997fe2679bc84a3a82"},
     {file = "pycryptodomex-3.10.4-cp35-abi3-win_amd64.whl", hash = "sha256:041cbde579b3e044ea1b24ff16e4a2d84eacdfd925a96bca21707df0953d1f94"},
     {file = "pycryptodomex-3.10.4-pp27-pypy_73-macosx_10_9_x86_64.whl", hash = "sha256:e767c7a84d7eff2294ea488dfd1b9583b886f95cd521c59495f0266c7d967e1f"},
@@ -1073,8 +1076,8 @@ pycryptodomex = [
     {file = "pycryptodomex-3.10.4.tar.gz", hash = "sha256:acd3498a8ccf8ad20ce7daa5f7f5e6521465eeceb026f28a6adb0228dd9fcc6e"},
 ]
 pyflakes = [
-    {file = "pyflakes-2.3.1-py2.py3-none-any.whl", hash = "sha256:7893783d01b8a89811dd72d7dfd4d84ff098e5eed95cfa8905b22bbffe52efc3"},
-    {file = "pyflakes-2.3.1.tar.gz", hash = "sha256:f5bc8ecabc05bb9d291eb5203d6810b49040f6ff446a756326104746cc00c1db"},
+    {file = "pyflakes-2.4.0-py2.py3-none-any.whl", hash = "sha256:3bb3a3f256f4b7968c9c788781e4ff07dce46bdf12339dcda61053375426ee2e"},
+    {file = "pyflakes-2.4.0.tar.gz", hash = "sha256:05a85c2872edf37a4ed30b0cce2f6093e1d0581f8c19d7393122da7e25b2b24c"},
 ]
 pygments = [
     {file = "Pygments-2.10.0-py3-none-any.whl", hash = "sha256:b8e67fe6af78f492b3c4b3e2970c0624cbf08beb1e493b2c99b9fa1b67a20380"},
