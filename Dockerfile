@@ -1,5 +1,5 @@
 # TODO change to -slim image
-FROM python:3.9
+FROM python:3.10
 # TODO add nginx and change to 80
 EXPOSE 5000
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -19,7 +19,8 @@ RUN curl -sSL -o install-poetry.py https://raw.githubusercontent.com/python-poet
 # Copy using poetry.lock* in case it doesn't exist yet
 COPY pyproject.toml poetry.lock* /app/
 
-RUN $POETRY_HOME/bin/poetry install --no-root --no-dev
+RUN $POETRY_HOME/bin/poetry config experimental.new-installer false && \
+    $POETRY_HOME/bin/poetry install --no-interaction --no-root --no-dev
 
 COPY . /app
 
