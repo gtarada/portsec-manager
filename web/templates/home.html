@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}
-Home
+Switch data
 {% endblock %}
 {% block content %}
-<p>Home page for the Visual Studio Code Flask tutorial.</p>
+{{ status_data|safe }}
 {% endblock %}
