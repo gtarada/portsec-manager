@@ -1,5 +1,5 @@
 # TODO change to -slim image
-FROM python:3.10
+FROM python:3.9
 # TODO add nginx and change to 80
 EXPOSE 5000
 ENV PYTHONDONTWRITEBYTECODE=1 \
