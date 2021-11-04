@@ -1,0 +1,41 @@
+<div class="responsive-table">
+    <form action="{{ url_for('home') }}" method="post">
+        {% if switch_data %}
+        <table class="table table--striped">
+            <tr>
+                <th>Hostname</th>
+                <th>IP address</th>
+            </tr>
+            <tr>
+                <td>{{ switch_data.hostname }}</td>
+                <td>{{ switch_data.ip_address }}</td>
+            </tr>
+        </table>
+        {% if switch_data.interfaces %}
+        <table class="table table--hover table--wrap table--compressed">
+            <tr>
+                <th>Name</th>
+                <th>Duplex</th>
+                <th>Speed</th>
+                <th>VLAN</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Input errors</th>
+                <th>Port security maximum</th>
+                <th>Port security sticky</th>
+                <th>Port security last MAC address</th>
+                <th>Port security violation count</th>
+                <th>Port security secure MAC address</th>
+            </tr>
+            {% for interface in switch_data.interfaces.keys() %}
+            {% include "./interface.html" %}
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No interfaces are available.</p>
+        {% endif %}
+        {% else %}
+        <p>Switch is not available.</p>
+        {% endif %}
+    </form>
+</div>

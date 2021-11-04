@@ -4,7 +4,7 @@ from datetime import datetime
 
 from core.plugins.get_status_data import get_status_data
 from core.plugins.inv.single_host import single_host
-from core.plugins.print_switch_web import print_switch_web
+# from core.plugins.print_switch_web import print_switch_web
 from flask import Flask, render_template
 from nornir import InitNornir
 from nornir.core import Nornir
@@ -18,7 +18,8 @@ def get_status(nr: Nornir) -> None:
     switches = {}
     for switch in output.keys():
         switches[switch] = output[switch].result
-        return print_switch_web(switches[switch])
+        # return print_switch_web(switches[switch])
+        return switches[switch]
 
 
 @app.route("/")
@@ -27,7 +28,7 @@ def home():
     filter = "f14"
     nr = InitNornir(config_file="nornir_config.yaml")
     nr.inventory.hosts = single_host(nr, filter)
-    return render_template("home.html", status_data=get_status(nr))
+    return render_template("home.html", switch_data=get_status(nr))
 
 
 @app.route("/about/")

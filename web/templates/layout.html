@@ -1,26 +1,119 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="locale" content="US">
+        <meta name="language" content="en">
+        <meta name="country" content="US">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='cui-standard.css')}}">
+        <!-- <link rel="icon" type="image/vnd.microsoft.icon" href="//www.cisco.com/favicon.ico">
+        <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="///www.cisco.com/favicon.ico"> -->
+    </head>
 
-<head>
-    <meta charset="utf-8" />
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
-</head>
+    <body class="cui">
+        <div class="content-fluid">
+            <div class="sidebar sidebar--indigo">
+                <div class="sidebar__header">
+                    <div class="sidebar__header-title">Port-security manager</div>
+                </div>
 
-<body>
-    <div class="navbar">
-        <a href="{{ url_for('home') }}" class="navbar-brand">Home</a>
-        <a href="{{ url_for('about') }}" class="navbar-item">About</a>
-        <a href="{{ url_for('contact') }}" class="navbar-item">Contact</a>
-    </div>
+                <ul>
+                    <li class="sidebar__item"><a href="{{ url_for('home') }}">Home</a></li>
+                    <!-- <li class="sidebar__item"><a href="{{ url_for('about') }}">About</a></li> -->
+                    <!-- <li class="sidebar__drawer">
+                        <a>Configuration</a>
+                        <ul>
+                            <li class="sidebar__item"><a>Open Device Configuration</a></li>
+                            <li class="sidebar__item"><a>Configuration Guides</a></li>
+                        </ul>
+                    </li> -->
+                    <li class="sidebar__drawer">
+                        <a>Inventory</a>
+                        <ul>
+                            <li class="sidebar__item"><a>Routers</a></li>
+                            <li class="sidebar__item"><a>Switches</a></li>
+                        </ul>
+                    </li>
+                    <!-- <li class="sidebar__drawer">
+                        <a>Services</a>
+                        <ul>
+                            <li class="sidebar__item"><a>Network Services</a></li>
+                            <li class="sidebar__item"><a>Mobility Services</a></li>
+                        </ul>
+                    </li> -->
+                    <!-- <li class="sidebar__item"><a href="{{ url_for('contact') }}">Contact</a></li> -->
+                </ul>
+            </div>
+            <main>
+                <header class="header header--tall">
+                    <div class="header-bar container">
+                        <!-- <a href="javascript:;" class="header-bar__logo">
+                            <span class="icon-cisco"></span>
+                        </a> -->
+                        <div class="header-bar__main">
+                            <div class="header-breadcrumbs">
+                                <ul class="breadcrumb">
+                                    <li><a href="../index.html">Home</a></li>
+                                    <li><span>sw14</span></li>
+                                </ul>
+                            </div>
+                            <div class="header-heading">
+                                <h1 class="page-title">sw14</h1>
+                            </div>
+                            <div class="header-menus">
+                                <ul class="nav nav-tabs">
+                                    <li class="tab">
+                                        <a><div class="tab__heading" title="Switch data">Switch data</div></a>
+                                    </li>
+                                    <!-- <li class="tab">
+                                        <a href="standard.html"><div class="tab__heading" title="Standard">Standard</div></a>
+                                    </li>
+                                    <li class="tab">
+                                        <a href="wide.html"><div class="tab__heading" title="Wide">Wide</div></a>
+                                    </li>
+                                    <li class="tab active">
+                                        <a href="sidebar.html"><div class="tab__heading" title="Sidebar">Sidebar</div></a>
+                                    </li> -->
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <div class="header-toolbar">
+                            <a href="javascript:;" class="btn btn--icon">
+                                <span class="icon-search"></span>
+                            </a>
+                            <a href="javascript:;" class="btn btn--icon">
+                                <span class="icon-alert"></span>
+                            </a>
+                            <a href="javascript:;" class="btn btn--icon">
+                                <span class="icon-cog"></span>
+                            </a>
+                        </div> -->
+                    </div>
+                </header>
 
-    <div class="body-content">
-        {% block content %}
-        {% endblock %}
-        <hr />
-        <footer>
-        </footer>
-    </div>
-</body>
+                <div class="content" style="height:100%">
+                    <div class="container">
+                        <div class="section">
+                            {% block content %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="footer footer--basic">
+                    <div class="footer__links">
+                        <ul class="list">
+                            <li><a href="{{ url_for('about') }}">About</a></li>
+                            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                        </ul>
+                    </div>
+                </footer>
+            </main>
+        </div>
+    </body>
 
 </html>
