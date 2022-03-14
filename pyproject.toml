@@ -19,7 +19,7 @@ tabulate = "^0.8.9"
 
 [tool.poetry.dev-dependencies]
 black = "^21.10b0"
-mypy = "^0.910"
+mypy = "^0.940"
 pytest = "^6.2.5"
 flake8 = "^3.9.2"
 yamllint = "^1.26.3"
