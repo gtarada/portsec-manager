@@ -37,7 +37,7 @@ jobs:
       run: |
         pylint `find -regextype egrep -regex '(.*.py)$' | grep -v ./mib/ | grep -v ./util/ | grep -v get-poetry.py | xargs` | tee pylint.txt
     - name: Upload pylint.txt as artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: pylint report
         path: pylint.txt
